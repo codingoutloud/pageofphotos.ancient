@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+<article>
+    <p>
+        Page of Photos, or PoP for short, is an ASP.NET MVC web application to accompany the book <a href="http://www.cloudarchitecturepatterns.com">Cloud Architecture Patterns</a> (O'Reilly Media, 2012).
+        The primary function of the app is, as the name implies, to display photos on a web page. That's pretty cutting edge, we know.
+        It is possible to view photos without an account or create an account and upload photos to your very own page.
+        PoP was built using ASP.NET MVC on Windows Azure.
+    </p>
+</article>
+
+<aside>
+    <h3>Who Wrote PoP?</h3>
+    <p>
+        Bill Wilder is the author of the book, and also wrote most of this sample app. But not all! He got some excellent help from Kevin Wilder and <a href="http://natepickett.blogspot.com/">Nathan Pickett</a>.
+    </p>
+    <ul>
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+</aside>

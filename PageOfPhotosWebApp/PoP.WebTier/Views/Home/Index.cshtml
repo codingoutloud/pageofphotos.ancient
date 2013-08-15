@@ -1,0 +1,24 @@
+﻿@model List<PoP.WebTier.Models.SlugModel>
+@{
+    ViewBag.Title = "Welcome to Page of Photos!";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+
+<fieldset>
+    <legend>Legendary</legend>
+    <ol>
+        @foreach (var item in Model)
+        {
+            <li><a href="/@item.Name">@item.Name (@item.Description)</a></li>
+        }
+    </ol>
+</fieldset>

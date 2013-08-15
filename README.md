@@ -1,4 +1,1 @@
-pageofphotos
-============
-
-Page of Photos (PoP) - show multiple photos on a single page
+Page of Photos (PoP) shows multiple photos on a single page. Oh yeah.

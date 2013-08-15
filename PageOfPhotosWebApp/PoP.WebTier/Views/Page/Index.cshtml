@@ -1,0 +1,26 @@
+﻿@model PoP.WebTier.Models.PageModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>@Html.ActionLink("Upload More Media Files", "Upload")</p>   
+}
+<h2>Here are <span>@Model.Media.Count</span> photos and videos from @Model.Description !</h2>
+
+<fieldset>
+   <legend>Legendary</legend>
+   @foreach (var mediaItem in Model.Media)
+   {   
+       <h2>@mediaItem.Title</h2>
+       if (mediaItem.DisplaySize != null && mediaItem.DisplaySize.Height > 0 && mediaItem.DisplaySize.Width > 0)
+       {
+          <img src="@mediaItem.Url" width="@mediaItem.DisplaySize.Width" height="@mediaItem.DisplaySize.Height"/>
+       }
+       else
+       {
+          <img src="@mediaItem.Url"/>            
+       }
+   }
+</fieldset>
