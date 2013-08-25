@@ -2,6 +2,7 @@
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
 using System;
 using System.Collections.Generic;
@@ -35,27 +36,40 @@ namespace MediaRepository
       public static void CaptureUploadedMedia(Stream mediaByteStream, string origFilename, string origMimeType, int byteCount)
       {
          {
-            try
-            {
-                var valetKeyUrl = ConfigurationManager.AppSettings["MediaStorageValetKeyUrl"];
-                var destinationUrl =
-                    String.Format(ConfigurationManager.AppSettings["MediaStorageUrlFile.ExtTemplate"],
-                    Guid.NewGuid(),
-                    new FileInfo(origFilename).Extension
-                    );
+             try
+             {
+                 var valetKeyUrl = ConfigurationManager.AppSettings["MediaStorageValetKeyUrl"];
+                 var destinationUrl =
+                     String.Format(ConfigurationManager.AppSettings["MediaStorageUrlFile.ExtTemplate"],
+                                   Guid.NewGuid(),
+                                   new FileInfo(origFilename).Extension
+                         );
 
-               var valetKeyUri = new Uri(valetKeyUrl);
-               var creds = new StorageCredentials(valetKeyUri.Query);
-               var blob = new CloudBlockBlob(new Uri(destinationUrl), creds);
-               blob.UploadFromStream(mediaByteStream, options: new BlobRequestOptions { RetryPolicy = new ExponentialRetry(TimeSpan.FromSeconds(3), 5) });
+                 var valetKeyUri = new Uri(valetKeyUrl);
+                 var creds = new StorageCredentials(valetKeyUri.Query);
+                 var blob = new CloudBlockBlob(new Uri(destinationUrl), creds);
+                 blob.UploadFromStream(mediaByteStream,
+                                       options:
+                                           new BlobRequestOptions
+                                               {
+                                                   RetryPolicy = new ExponentialRetry(TimeSpan.FromSeconds(3), 5)
+                                               });
 
-               // if that worked, notify via queue
-            }
-            catch (StorageException ex)
-            {
-               System.Diagnostics.Trace.TraceError("Exception thrown in BlobExtensions.UploadFile: " + ex);
-               throw;
-            }
+                 // if that worked, notify via queue
+                 var mediaIngestionQueueValetKeyUrl = ConfigurationManager.AppSettings["MediaIngestionQueueValetKeyUrl"];
+                 var queueValetKeyUri = new Uri(mediaIngestionQueueValetKeyUrl);
+                 var queueCreds = new StorageCredentials(queueValetKeyUri.Query);
+                 var queueClient = new CloudQueueClient(new Uri(String.Format("https://{0}", queueValetKeyUri.Host)), queueCreds);
+                 var queueMessage = new CloudQueueMessage(destinationUrl);
+                 var queueName = "media-ingestion";
+                 queueName = queueValetKeyUri.AbsolutePath.Substring(1);
+                 queueClient.GetQueueReference(queueName).AddMessage(queueMessage);
+             }
+             catch (StorageException ex)
+             {
+                 System.Diagnostics.Trace.TraceError("Exception thrown in BlobExtensions.UploadFile: " + ex);
+                 throw;
+             }
          }
       }
    }
