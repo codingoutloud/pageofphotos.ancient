@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -12,7 +12,7 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                    <p class="site-title"><img alt="Page of Photos logo" src="/Content/pop-logo.png"/></p>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -21,6 +21,7 @@
                     <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Upload", "Upload", "Page")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         </ul>
@@ -37,7 +38,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; 2012-@DateTime.Now.Year - Bill Wilder - but shared under <a href="http://opensource.org/licenses/MIT">MIT</a> Open Source License</p>
+                    <p>Copyright &copy; 2012-@DateTime.Now.Year, Bill Wilder. <a href="https://github.com/codingoutloud/pageofphotos/">Source code</a> shared under <a href="http://opensource.org/licenses/MIT">MIT</a> Open Source License.</p>
                 </div>
             </div>
         </footer>

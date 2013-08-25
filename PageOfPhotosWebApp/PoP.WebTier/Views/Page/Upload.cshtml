@@ -2,32 +2,19 @@
     ViewBag.Title = "Upload";
 }
 
-<h2>Upload new Images or Videos</h2>
+<h2>Upload a Photo</h2>
 
 @using (Html.BeginForm("Upload", "Page", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-  <label for="file1">Filename:</label>
-  <input type="file" name="file" id="file" />
+    <label for="file1">Filename:</label><input type="file" name="files" id="file1" />
+    
+@*
+    <label for="file2">Filename:</label><input type="file" name="files" id="file2" />
+    <label for="file2">Filename:</label><input type="file" name="files" id="file3" />
+    <label for="file2">Filename:</label><input type="file" name="files" id="file4" />
+*@
 
-  <input type="submit" value="Start Uploading" />
-}
-
-<hr/>
-
-@using (Html.BeginForm("Upload", "Page", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-  <label for="file1">Filename:</label>
-  <input type="file" name="files" id="file1" />
-
-  <label for="file2">Filename:</label>
-  <input type="file" name="files" id="file2" />
-
-  <label for="file2">Filename:</label>
-  <input type="file" name="files" id="file3" />
-
-  <label for="file2">Filename:</label>
-  <input type="file" name="files" id="file4" />
-
-  <input type="submit" value="Upload" />
+    <input type="submit" value="Upload" />
+    <h3>@ViewBag.Message</h3>
 }
 

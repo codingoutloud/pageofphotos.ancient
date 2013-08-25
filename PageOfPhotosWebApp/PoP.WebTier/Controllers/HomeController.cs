@@ -10,21 +10,21 @@ namespace PoP.WebTier.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Buncha Photos. On one page. Amazing.";
+            ViewBag.Message = "A buncha Photos. All on one page. You're welcome.";
             
             return View(PageRepository.PageLister.ListPages());
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
+            ViewBag.Message = "";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "";
 
             return View();
         }

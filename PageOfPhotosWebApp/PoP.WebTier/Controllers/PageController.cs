@@ -1,4 +1,5 @@
-﻿using MediaRepository;
+﻿using System.Web.Routing;
+using MediaRepository;
 using PoP.WebTier.Models;
 using System;
 using System.Collections.Generic;
@@ -68,8 +69,10 @@ namespace PoP.WebTier.Controllers
 
 // TODO: re-enable      [Authorize]
       [HttpGet]
-      public ActionResult Upload()
+      public ActionResult Upload(string msg)
       {
+         ViewBag.Message = ""; // make sure there's always a valid string to simplify error checking in the view
+         if (!String.IsNullOrEmpty(msg)) ViewBag.Message = msg;
          return View();
       }
 
@@ -77,6 +80,9 @@ namespace PoP.WebTier.Controllers
       [HttpPost]
       public ActionResult Upload(IEnumerable<HttpPostedFileBase> files)
       {
+         var fileList = String.Empty;
+         var firstFile = true;
+
          foreach (var file in files.Where(file => file != null && file.ContentLength > 0))
          {
             Contract.Assert(file.FileName == Path.GetFileName(file.FileName)); // browsers should not send path info - but synthetic test could
@@ -87,9 +93,20 @@ namespace PoP.WebTier.Controllers
                file.SaveAs(path);
 #else
             AzureStorageHelper.CaptureUploadedMedia(file.InputStream, file.FileName, file.ContentType, file.ContentLength);
+            if (!firstFile) fileList += ", ";
+            fileList += file.FileName;
+            firstFile = false;
 #endif
          }
-         return RedirectToAction("Upload");
+         if (String.IsNullOrWhiteSpace(fileList))
+         {
+            return RedirectToAction("Upload");
+         }
+         else
+         {
+            var message = String.Format("Upload successful for: {0}", fileList);
+            return RedirectToAction("Upload", new { msg = message });
+         }
       }
 
 
