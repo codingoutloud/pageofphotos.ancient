@@ -1,4 +1,4 @@
-﻿using PoP.WebTier.Models;
+﻿using PoP.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,4 @@
-﻿using System.Web.Routing;
-using MediaRepository;
-using PoP.WebTier.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Drawing;
@@ -9,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PoP.Shared.Models;
+using MediaRepository;
 
 namespace PoP.WebTier.Controllers
 {
@@ -87,16 +86,10 @@ namespace PoP.WebTier.Controllers
          {
             Contract.Assert(file.FileName == Path.GetFileName(file.FileName)); // browsers should not send path info - but synthetic test could
                
-#if false
-   //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), file.FileName);
-               var path = Path.Combine("e:/temp/uploads", file.FileName);
-               file.SaveAs(path);
-#else
             AzureStorageHelper.CaptureUploadedMedia(file.InputStream, file.FileName, file.ContentType, file.ContentLength);
             if (!firstFile) fileList += ", ";
             fileList += file.FileName;
             firstFile = false;
-#endif
          }
          if (String.IsNullOrWhiteSpace(fileList))
          {
