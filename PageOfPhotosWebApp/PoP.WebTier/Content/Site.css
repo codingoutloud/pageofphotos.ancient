@@ -1,4 +1,35 @@
-﻿html {
+﻿/* speech-bubble CSS inspired by http://acidmartin.wordpress.com/2010/11/25/creating-a-speech-bubble-with-css3-and-without-additional-markup/ */
+
+.speech-bubble {
+    width: 225px;
+    padding: 10px;
+    background: #404040;
+    color: #fff;
+    font: normal 12px "Segoe UI", Arial, Sans-serif;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.speech-bubble:after {
+    content: "";
+    border: solid 10px transparent; /* set all borders to 10 pixels width */
+    border-top-color: #404040; /* the callout */
+    border-bottom: 0; /* we do not need the bottom border in this case */
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    bottom: -20px; /* border-width of the :after element + padding of the root element */
+    margin: auto;
+}
+
+/* ---------------------------------------------------- */
+/* The CSS below is mostly original (from MVC template) */
+/* ---------------------------------------------------- */
+
+html {
     background-color: #e2e2e2;
     margin: 0;
     padding: 0;
