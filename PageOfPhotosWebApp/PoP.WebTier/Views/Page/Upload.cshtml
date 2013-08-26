@@ -1,8 +1,20 @@
-﻿@{
+﻿@using System.Diagnostics
+@using System.Web.Configuration
+@{
     ViewBag.Title = "Upload";
+    int maxFileSize = 5; // default value
+    
+    System.Configuration.Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
+    var section = config.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+    if (section != null)
+    {
+        maxFileSize = (int) Math.Round(section.MaxRequestLength/1024.0, 1);
+    }
 }
 
 <h2>Upload a Photo</h2>
+<h3>NOTE: Files cannot be larger than <b>@maxFileSize</b> MB.</h3>
+<h5>If you upload a file that's too big, you'll see a big ugly error from IIS. A cloud-native solution would be to upload directly to Blob storage using the Valet Key Pattern.</h5>
 
 @using (Html.BeginForm("Upload", "Page", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
