@@ -6,8 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PoP.Shared.Models;
 using MediaRepository;
+using PoP.Model;
 
 namespace PoP.WebTier.Controllers
 {

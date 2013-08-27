@@ -58,11 +58,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="AzureStorageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PoP.Model\PoP.Model.csproj">
+      <Project>{a0c31bd5-67b9-4003-bd68-31639557a920}</Project>
+      <Name>PoP.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsAzureStorageCredentialsSwizzler\WindowsAzureStorageCredentialsSwizzler.csproj">
+      <Project>{55658526-0C5C-4036-AC4B-55AF543E6FB2}</Project>
+      <Name>WindowsAzureStorageCredentialsSwizzler</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

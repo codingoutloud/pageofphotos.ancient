@@ -13,14 +13,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaRepository", "MediaRep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageRepository", "PageRepository\PageRepository.csproj", "{7B28B96A-BC46-4EEF-A61E-89B0F245F4B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoP.Shared", "PoP.Shared\PoP.Shared.csproj", "{F3C179F5-E33D-4B04-97F3-DA6172933547}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5D6F3F4F-EE76-408E-8EC0-D4A9B37C656A}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".meta", ".meta", "{1CADF522-F496-41C5-B791-ABE18C306D7D}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+		..\TODO.md = ..\TODO.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoP.Model", "PoP.Model\PoP.Model.csproj", "{A0C31BD5-67B9-4003-BD68-31639557A920}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAzureStorageCredentialsSwizzler", "WindowsAzureStorageCredentialsSwizzler\WindowsAzureStorageCredentialsSwizzler.csproj", "{55658526-0C5C-4036-AC4B-55AF543E6FB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAzureStorageCredentialsSwizzler.Tests.Unit", "WindowsAzureStorageCredentialsSwizzler.Tests.Unit\WindowsAzureStorageCredentialsSwizzler.Tests.Unit.csproj", "{7DC02B45-0C60-447B-9046-C92AD8107B66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,10 +64,18 @@ Global
 		{7B28B96A-BC46-4EEF-A61E-89B0F245F4B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B28B96A-BC46-4EEF-A61E-89B0F245F4B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B28B96A-BC46-4EEF-A61E-89B0F245F4B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3C179F5-E33D-4B04-97F3-DA6172933547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3C179F5-E33D-4B04-97F3-DA6172933547}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3C179F5-E33D-4B04-97F3-DA6172933547}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3C179F5-E33D-4B04-97F3-DA6172933547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0C31BD5-67B9-4003-BD68-31639557A920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0C31BD5-67B9-4003-BD68-31639557A920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0C31BD5-67B9-4003-BD68-31639557A920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0C31BD5-67B9-4003-BD68-31639557A920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55658526-0C5C-4036-AC4B-55AF543E6FB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55658526-0C5C-4036-AC4B-55AF543E6FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55658526-0C5C-4036-AC4B-55AF543E6FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55658526-0C5C-4036-AC4B-55AF543E6FB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DC02B45-0C60-447B-9046-C92AD8107B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DC02B45-0C60-447B-9046-C92AD8107B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DC02B45-0C60-447B-9046-C92AD8107B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DC02B45-0C60-447B-9046-C92AD8107B66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

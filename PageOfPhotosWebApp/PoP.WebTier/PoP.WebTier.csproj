@@ -341,9 +341,13 @@
       <Project>{7b28b96a-bc46-4eef-a61e-89b0f245f4b6}</Project>
       <Name>PageRepository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PoP.Shared\PoP.Shared.csproj">
-      <Project>{f3c179f5-e33d-4b04-97f3-da6172933547}</Project>
-      <Name>PoP.Shared</Name>
+    <ProjectReference Include="..\PoP.Model\PoP.Model.csproj">
+      <Project>{a0c31bd5-67b9-4003-bd68-31639557a920}</Project>
+      <Name>PoP.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsAzureStorageCredentialsSwizzler\WindowsAzureStorageCredentialsSwizzler.csproj">
+      <Project>{55658526-0c5c-4036-ac4b-55af543e6fb2}</Project>
+      <Name>WindowsAzureStorageCredentialsSwizzler</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
