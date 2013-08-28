@@ -25,6 +25,7 @@ Page of Photos - What to do?
 - SEC - Use staging storage account for Web Tier, then copy it later
 - RES - Can I ban an IP address? Is it effective? Is it "too" effective?
 - DO - Convert CredSwizzler to NuGet - http://msdn.microsoft.com/en-us/library/windowsazure/hh403989.aspx
+- DO - Claims for: MaxSizePhotoUploadBytes, AllowedFileUploadExtensions, MaxNumberPhotoUploads, Username, Roles: Member, Admin, SuperAdmin
 
 _Move this list to Github once released._
 

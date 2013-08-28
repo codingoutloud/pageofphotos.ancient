@@ -1,33 +1,27 @@
-﻿using System.Configuration;
-using System.Diagnostics;
-using WindowsAzureStorageCredentialsSwizzler;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Queue;
-using Microsoft.WindowsAzure.Storage.RetryPolicies;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.RetryPolicies;
 
-namespace MediaRepository
+namespace ValetKeyPattern.AzureStorage
 {
-   public static class UriExtensions // TODO: factor out of this project
+   public static class BlobContainerValetOperations
    {
-      public static string PathNoQuery(this Uri uri)
+      /// <summary>
+      /// Upload the blob and then (if nothing went wrong) drop a message on the queue announcing the blob
+      /// </summary>
+      /// <param name="byteStream">Might be from File Upload via web page</param>
+      /// <param name="origFilename"></param>
+      /// <param name="origMimeType"></param>
+      /// <param name="byteCount">Count of bytes in the stream. Not used at this time. May be used in future to optimize the upload to blob storage, for telemetry, or to block uploads over a certain size.</param>
+      public static void UploadStreamToBlob(this BlobContainerValet blobContainerValet, Stream byteStream, string origFilename, string origMimeType, int byteCount)
       {
-         var path = uri.ToString();
-         var queryStart = path.IndexOf("?", StringComparison.InvariantCulture);
 
-         return queryStart > 0 ? path.Substring(0, queryStart) : path;
-      }
-   }
-
-   public static class AzureStorageHelper // TODO: this is a terrible class name
-   {
+#if false
       /// <summary>
       /// Upload the blob and then (if nothing went wrong) drop a message on the queue announcing the blob
       /// </summary>
@@ -78,6 +72,37 @@ namespace MediaRepository
             }
          }
       }
+#endif
+#if false
+         {
+            try
+            {
+               var blob = new CloudBlockBlob(new Uri(destinationUrl), creds);
+               blob.UploadFromStream(byteStream,
+                  options:
+                     new BlobRequestOptions
+                     {
+                        RetryPolicy = new ExponentialRetry(TimeSpan.FromSeconds(3), 5)
+                     });
+
+               // if that worked, notify via queue
+               var mediaIngestionQueueValetKeyUrl = ConfigurationManager.AppSettings["MediaIngestionQueueValetKeyUrl"];
+
+               //TODO: ENCAPSULATE IN A QueueValet Class:
+               var queueCreds = StorageCredentialsSwizzler.CreateFromUrl(mediaIngestionQueueValetKeyUrl);
+               var queueClient = new CloudQueueClient(StorageCredentialsSwizzler.QueueBaseUri(mediaIngestionQueueValetKeyUrl), queueCreds);
+               var queueMessage = new CloudQueueMessage(destinationUrl);
+               var queueName = StorageCredentialsSwizzler.QueueName(mediaIngestionQueueValetKeyUrl);
+               var queueRef = queueClient.GetQueueReference(queueName);
+               queueRef.AddMessage(queueMessage);
+            }
+            catch (StorageException ex)
+            {
+               System.Diagnostics.Trace.TraceError("Exception thrown in BlobExtensions.UploadFile: " + ex);
+               throw;
+            }
+         }
+#endif
+      }
    }
 }
-
