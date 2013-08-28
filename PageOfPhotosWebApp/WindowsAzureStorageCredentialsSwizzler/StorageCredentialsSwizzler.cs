@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 
@@ -105,21 +106,31 @@ namespace WindowsAzureStorageCredentialsSwizzler
          return QueueBaseUri(new Uri(valetKeyUrl), forceHttps);
       }
 
+      /// <summary>
+      /// </summary>
+      /// <param name="valetKeyUri"></param>
+      /// <param name="forceHttps">Ignored when addressing Local Storage</param>
+      /// <returns></returns>
       public static Uri QueueBaseUri(Uri valetKeyUri, bool forceHttps = false)
       {
-         var scheme = valetKeyUri.Scheme;
-         if (forceHttps)
-         {
-            scheme = Uri.UriSchemeHttps;
-         }
+         Contract.Requires(valetKeyUri != null);
+
          if (StorageCredentialsSwizzler.AddressingCloudStorage(valetKeyUri))
          {
+            Contract.Assert(valetKeyUri.Port == 80 ||valetKeyUri.Port == 443);
+            var scheme = valetKeyUri.Scheme;
+            if (forceHttps)
+            {
+               scheme = Uri.UriSchemeHttps;
+            }
             return new Uri(String.Format("{0}://{1}", scheme, valetKeyUri.Host));
          }
          else // Local Storage
-         ///if (valetKeyUri.Port != 80 && valetKeyUri.Port != 443)
          {
-            return new Uri(String.Format("{0}://{1}:{2}/{3}", scheme, valetKeyUri.Host, valetKeyUri.Port, Constants.CloudEmulatorStorageAccountName));
+            Contract.Assert(valetKeyUri.IsLoopback);
+            Contract.Assert(valetKeyUri.Port != 80 && valetKeyUri.Port != 443);
+            Contract.Assert(valetKeyUri.Scheme != Uri.UriSchemeHttps);
+            return new Uri(String.Format("{0}://{1}:{2}/{3}", Uri.UriSchemeHttp, valetKeyUri.Host, valetKeyUri.Port, Constants.CloudEmulatorStorageAccountName));
          }
       }
    }
