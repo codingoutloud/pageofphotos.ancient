@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace ValetKeyPattern.AzureStorage
 {
-   public static class UriParser
+   public static class ValetKeyUriParser
    {
       /// <summary>
       /// Infer from IsEmulated(Uri uri)
       /// </summary>
-      internal static bool IsEmulated(string url)
+      internal static bool IsEmulated(this string url)
       {
-         return IsEmulated(new Uri(url));
+         return new Uri(url).IsEmulated();
       }
 
       /// <summary>
@@ -24,7 +21,7 @@ namespace ValetKeyPattern.AzureStorage
       /// </summary>
       /// <param name="uri"></param>
       /// <returns>true iff the URL is determined to be addressing Cloud Storage</returns>
-      internal static bool IsEmulated(Uri uri)
+      internal static bool IsEmulated(this Uri uri)
       {
          var isHttps = (uri.Scheme == Uri.UriSchemeHttps);
          var hasCloudStorageIndicator = uri.Host.EndsWith(".core.windows.net");
@@ -66,9 +63,9 @@ namespace ValetKeyPattern.AzureStorage
          }
       }
 
-      internal static Uri BaseUri(string valetKeyUrl, bool forceHttps = false)
+      internal static Uri BaseUri(this string valetKeyUrl, bool forceHttps = false)
       {
-         return BaseUri(new Uri(valetKeyUrl), forceHttps);
+         return new Uri(valetKeyUrl).BaseUri(forceHttps);
       }
 
       /// <summary>
@@ -76,11 +73,11 @@ namespace ValetKeyPattern.AzureStorage
       /// <param name="valetKeyUri"></param>
       /// <param name="forceHttps">Ignored when addressing Local Storage</param>
       /// <returns></returns>
-      internal static Uri BaseUri(Uri valetKeyUri, bool forceHttps = false)
+      internal static Uri BaseUri(this Uri valetKeyUri, bool forceHttps = false)
       {
          Contract.Requires(valetKeyUri != null);
 
-         if (UriParser.IsEmulated(valetKeyUri))
+         if (ValetKeyUriParser.IsEmulated(valetKeyUri))
          {
             Contract.Assert(valetKeyUri.IsLoopback);
             Contract.Assert(valetKeyUri.Port != 80 && valetKeyUri.Port != 443);
@@ -98,6 +95,27 @@ namespace ValetKeyPattern.AzureStorage
             return new Uri(String.Format("{0}://{1}", scheme, valetKeyUri.Host));
          }
       }
- 
+
+       /// <summary>
+       /// Infer from FileName(Uri uri)
+       /// </summary>
+       public static string FileName(this string url)
+       {
+           return new Uri(url).FileName();
+       }
+
+      /// <summary>
+      /// From c:\x\y\foo.txt, return foo.txt
+      /// From http://example.com/x/y/foo.txt, return foo.txt
+      /// </summary>
+      /// <param name="uri">Source URL of file name. A URL or local file path.</param>
+      /// <returns></returns>
+      public static string FileName(this Uri uri)
+      {
+          var filePath = uri.LocalPath;
+          var fileInfo = new FileInfo(filePath);
+          return fileInfo.Name;
+      }
    }
 }
+

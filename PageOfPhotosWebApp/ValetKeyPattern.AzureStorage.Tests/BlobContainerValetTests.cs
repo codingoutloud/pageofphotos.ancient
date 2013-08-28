@@ -7,7 +7,7 @@ namespace ValetKeyPattern.AzureStorage.Tests
    public class BlobContainerValetTests
    {
        private static string ValetKeyUrl =
-          "https://boxesbackups.blob.core.windows.net/test-sas-updates-destination?sr=c&sv=2012-02-12&st=2013-07-27T22%3A08%3A17Z&se=2023-07-27T23%3A08%3A00Z&sp=rwdl&sig=uecb9Dxkf5bWpD6u4RB3JfVpV%2F14QcHNdoQv%2FV3WLXg%3D";
+         "https://boxesbackups.blob.core.windows.net/test-sas-updates-destination?sr=c&sv=2012-02-12&st=2013-07-27T22%3A08%3A17Z&se=2023-07-27T23%3A08%3A00Z&sp=rwdl&sig=uecb9Dxkf5bWpD6u4RB3JfVpV%2F14QcHNdoQv%2FV3WLXg%3D";
 
       private static string PublicFileUrl1 =
          "https://boxesbackups.blob.core.windows.net/test-sas-updates-source/bill.png?sr=b&sv=2012-02-12&st=2013-07-27T22%3A09%3A00Z&se=2023-07-27T23%3A09%3A00Z&sp=r&sig=l2KDiRV1PLSxhr0ncKkkCLaKnkdAVZmdVqJWH%2BYxhWw%3D";
@@ -24,34 +24,14 @@ namespace ValetKeyPattern.AzureStorage.Tests
       [TestMethod]
       public void ValetKey_GetPathFromValidValetKey_Succeeds()
       {
-         var uri = BlobContainerValet.GetDestinationPathFromValetKey(ValetKeyUrl);
+         var uri = BlobContainerValet2.GetDestinationPathFromValetKey(ValetKeyUrl);
          Assert.IsNotNull(uri);
-      }
-
-      [TestMethod]
-      public void ValetKey_GetFileFromValidFileName_Succeeds()
-      {
-         var expected = "expected.txt";
-         var source = @"c:\foo\bar\" + expected;
-
-         var result = BlobContainerValet.GetFileNameFromUrl(source);
-         Assert.AreEqual(expected, result);
-      }
-
-      [TestMethod]
-      public void ValetKey_GetFileFromValidFileUrl_Succeeds()
-      {
-         var expected = "expected.txt";
-         var source = @"http://foo/bar/xyz/" + expected;
-
-         var result = BlobContainerValet.GetFileNameFromUrl(source);
-         Assert.AreEqual(expected, result);
       }
 
       [TestMethod]
       public void ValetKey_GetSasTokenFromSasUrl_Succeeds()
       {
-         var sasToken = BlobContainerValet.GetSasTokenFromValetKeyUrl(ValetKeyUrl);
+         var sasToken = BlobContainerValet2.GetSasTokenFromValetKeyUrl(ValetKeyUrl);
          Assert.IsNotNull(sasToken);
          Assert.IsTrue(sasToken[0] == '?');
       }
@@ -59,7 +39,7 @@ namespace ValetKeyPattern.AzureStorage.Tests
       [TestMethod]
       public void ValetKey_BuildDestinationUri_RetainsContainerName()
       {
-         var destinationUri = BlobContainerValet.BuildDesinationUri(ValetKeyUrl, PublicFileUrl1);
+         var destinationUri = BlobContainerValet2.BuildDesinationUri(ValetKeyUrl, PublicFileUrl1);
          Assert.AreEqual(destinationUri.AbsoluteUri, DestinationUrl1);
       }
 
@@ -67,10 +47,10 @@ namespace ValetKeyPattern.AzureStorage.Tests
       [TestCategory("Integration")]
       public void ValetKey_UpdateBlobWithinContainer_Succeeds()
       {
-         BlobContainerValet.UploadToBlobContainer(ValetKeyUrl, PublicFileUrl1);
-         BlobContainerValet.UploadToBlobContainer(ValetKeyUrl, PublicFileUrl2);
-         BlobContainerValet.UploadToBlobContainer(ValetKeyUrl, PublicFileUrl1);
-         BlobContainerValet.UploadToBlobContainer(ValetKeyUrl, PublicFileUrl3);
+         BlobContainerValet2.UploadFile(ValetKeyUrl, PublicFileUrl1);
+         BlobContainerValet2.UploadFile(ValetKeyUrl, PublicFileUrl2);
+         BlobContainerValet2.UploadFile(ValetKeyUrl, PublicFileUrl1);
+         BlobContainerValet2.UploadFile(ValetKeyUrl, PublicFileUrl3);
 
          // should be up there!
       }

@@ -8,6 +8,26 @@ namespace ValetKeyPattern.AzureStorage.Tests
    [TestClass]
    public class UriParserTests
    {
+       [TestMethod]
+       public void UriParser_ParsingWellFormedMinimalCloudFileName_Succeeds()
+       {
+           var expected = "file.ext";
+           var url = "http://accountname.blob.core.windows.net/partition/file.ext?SomeQueryStringForNow";
+           var uri = new Uri(url);
+
+           Assert.AreEqual(expected, uri.FileName());
+       }
+
+       [TestMethod]
+       public void UriParser_ParsingWellFormedMinimalLocalFileName_Succeeds()
+       {
+           var expected = "file.ext";
+           var url = "http://127.0.0.1:10000/account-name/partition/somethingelse/andmore/file.ext?SomeQueryStringForNow";
+           var uri = new Uri(url);
+
+           Assert.AreEqual(expected, uri.FileName());
+       }
+
       [TestMethod]
       public void UriParser_ParsingWellFormedMinimalCloudStoragePartitionName_Succeeds()
       {

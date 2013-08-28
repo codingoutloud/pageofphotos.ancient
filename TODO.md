@@ -11,6 +11,7 @@ Page of Photos - What to do?
 
 **BACKLOG**
 
+- RES - How to make OOB experience (from github) easy - one part is to set everything to emulator, but then how to make transition to Cloud Service wicked easy? Generate the CloudService.cscfg?
 - BACK - Create Thumb, Display Thumbs, Link to Orig Photo from thumb (orig shown on one page or popup)
 - VKP - NuGet package
 - VKP - Page for creating (or Cerebrata or zud.io)

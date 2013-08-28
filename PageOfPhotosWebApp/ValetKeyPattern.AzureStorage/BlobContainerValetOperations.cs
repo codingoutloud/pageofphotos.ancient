@@ -18,7 +18,7 @@ namespace ValetKeyPattern.AzureStorage
       /// <param name="origFilename"></param>
       /// <param name="origMimeType"></param>
       /// <param name="byteCount">Count of bytes in the stream. Not used at this time. May be used in future to optimize the upload to blob storage, for telemetry, or to block uploads over a certain size.</param>
-      public static void UploadStreamToBlob(this BlobContainerValet blobContainerValet, Stream byteStream, string origFilename, string origMimeType, int byteCount)
+      public static void UploadStreamToBlob(this BlobContainerValet2 blobContainerValet, Stream byteStream, string origFilename, string origMimeType, int byteCount)
       {
 
 #if false

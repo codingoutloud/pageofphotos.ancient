@@ -16,7 +16,7 @@ namespace ValetKeyPattern.AzureStorage
     /// A BlobUri object "is a" Uri object; all Uri methods are available.
     /// </summary>
     // TODO: implement separate BlobContainerUri class
-    public static class UriValidator
+    public static class ValetKeyUriValidator
     {
        public static int MinLengthAzureBlobContainerName = 3;
 
