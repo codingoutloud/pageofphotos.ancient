@@ -7,8 +7,8 @@
     <ProjectGuid>{A0C31BD5-67B9-4003-BD68-31639557A920}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PoP.Model</RootNamespace>
-    <AssemblyName>PoP.Model</AssemblyName>
+    <RootNamespace>PoP.Models</RootNamespace>
+    <AssemblyName>PoP.Models</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

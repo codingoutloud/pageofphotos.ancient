@@ -73,9 +73,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PoP.Model\PoP.Model.csproj">
+    <ProjectReference Include="..\PoP.Model\PoP.Models.csproj">
       <Project>{a0c31bd5-67b9-4003-bd68-31639557a920}</Project>
-      <Name>PoP.Model</Name>
+      <Name>PoP.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

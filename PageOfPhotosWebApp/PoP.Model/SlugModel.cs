@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PoP.Model
+namespace PoP.Models
 {
    public class SlugModel
    {

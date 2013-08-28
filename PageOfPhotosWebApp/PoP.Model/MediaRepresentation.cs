@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 
-namespace PoP.Model
+namespace PoP.Models
 {
    public abstract class MediaRepresentation
    {

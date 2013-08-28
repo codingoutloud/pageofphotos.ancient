@@ -28,7 +28,9 @@ namespace PoP.WebTier
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            var ex = Server.GetLastError();
+           var url = HttpContext.Current.Request.Url;
+           
+           var ex = Server.GetLastError();
             if (ex is ThreadAbortException || ex is HttpException)
                 return;
             
@@ -42,7 +44,6 @@ namespace PoP.WebTier
             // HttpContext context = ((HttpApplication)sender).Context;
             if (HttpContext.Current != null)
             {
-                var url = HttpContext.Current.Request.Url;
                 var page = HttpContext.Current.Handler as System.Web.UI.Page;
             }
         }

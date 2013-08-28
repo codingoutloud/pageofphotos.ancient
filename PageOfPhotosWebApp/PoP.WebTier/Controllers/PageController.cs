@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MediaRepository;
-using PoP.Model;
+using PoP.Models;
 
 namespace PoP.WebTier.Controllers
 {

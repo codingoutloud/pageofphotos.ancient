@@ -100,6 +100,11 @@ namespace WindowsAzureStorageCredentialsSwizzler
          }
       }
 
+      public static Uri QueueBaseUri(string valetKeyUrl, bool forceHttps = false)
+      {
+         return QueueBaseUri(new Uri(valetKeyUrl), forceHttps);
+      }
+
       public static Uri QueueBaseUri(Uri valetKeyUri, bool forceHttps = false)
       {
          var scheme = valetKeyUri.Scheme;
@@ -107,7 +112,15 @@ namespace WindowsAzureStorageCredentialsSwizzler
          {
             scheme = Uri.UriSchemeHttps;
          }
-         return new Uri(String.Format("{0}://{1}", scheme, valetKeyUri.Host));
+         if (StorageCredentialsSwizzler.AddressingCloudStorage(valetKeyUri))
+         {
+            return new Uri(String.Format("{0}://{1}", scheme, valetKeyUri.Host));
+         }
+         else // Local Storage
+         ///if (valetKeyUri.Port != 80 && valetKeyUri.Port != 443)
+         {
+            return new Uri(String.Format("{0}://{1}:{2}/{3}", scheme, valetKeyUri.Host, valetKeyUri.Port, Constants.CloudEmulatorStorageAccountName));
+         }
       }
    }
 }

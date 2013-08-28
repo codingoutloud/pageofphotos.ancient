@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PoP.Model
+namespace PoP.Models
 {
    public class PageModel : SlugModel
    {

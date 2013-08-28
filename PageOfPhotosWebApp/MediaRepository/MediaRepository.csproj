@@ -65,9 +65,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PoP.Model\PoP.Model.csproj">
+    <ProjectReference Include="..\PoP.Model\PoP.Models.csproj">
       <Project>{a0c31bd5-67b9-4003-bd68-31639557a920}</Project>
-      <Name>PoP.Model</Name>
+      <Name>PoP.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsAzureStorageCredentialsSwizzler\WindowsAzureStorageCredentialsSwizzler.csproj">
       <Project>{55658526-0C5C-4036-AC4B-55AF543E6FB2}</Project>

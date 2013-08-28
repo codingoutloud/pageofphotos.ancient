@@ -341,9 +341,9 @@
       <Project>{7b28b96a-bc46-4eef-a61e-89b0f245f4b6}</Project>
       <Name>PageRepository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PoP.Model\PoP.Model.csproj">
+    <ProjectReference Include="..\PoP.Model\PoP.Models.csproj">
       <Project>{a0c31bd5-67b9-4003-bd68-31639557a920}</Project>
-      <Name>PoP.Model</Name>
+      <Name>PoP.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsAzureStorageCredentialsSwizzler\WindowsAzureStorageCredentialsSwizzler.csproj">
       <Project>{55658526-0c5c-4036-ac4b-55af543e6fb2}</Project>
