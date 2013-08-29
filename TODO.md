@@ -29,6 +29,7 @@ Page of Photos - What to do?
 - DO - Claims for: MaxSizePhotoUploadBytes, AllowedFileUploadExtensions, MaxNumberPhotoUploads, Username, Roles: Member, Admin, SuperAdmin
 - DO - add AutoRepair concept - bool AutoRepair { get; set; }
 - DO - add full credentials option to AzureStorageVK
+- RES - thread safety - http://msdn.microsoft.com/en-us/library/microsoft.windowsazure.storageclient.cloudqueueclient.aspx - makes sense to rebuild for this reason?
 
 _Move this list to Github once released._
 

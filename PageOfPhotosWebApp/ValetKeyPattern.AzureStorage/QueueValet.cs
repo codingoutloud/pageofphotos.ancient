@@ -22,6 +22,10 @@ namespace ValetKeyPattern.AzureStorage
       public QueueValet(Uri uri) : base(uri)
       {}
 
+      protected override Uri GetSpecificBaseUri()
+      {
+         return CloudStorageAccount.DevelopmentStorageAccount.CreateCloudQueueClient().BaseUri;
+      }
 
 #if false
       public QueueValet CreateQueueValetUri(string storageAccountName, string queueName, string sasQueryString,
@@ -50,10 +54,9 @@ namespace ValetKeyPattern.AzureStorage
       {
          try
          {
-            var queueCreds = new StorageCredentials(ValetKeyUri.Query);
-            var vkQueueClient = new CloudQueueClient(new Uri(String.Format("https://{0}", ValetKeyUri.Host)), queueCreds);
-            var queueRef = vkQueueClient.GetQueueReference(QueueName);
-            queueRef.AddMessage(message);
+            var cloudQueueClient = new CloudQueueClient(BaseUri, StorageCredentials);
+            var cloudQueue = cloudQueueClient.GetQueueReference(QueueName);
+            cloudQueue.AddMessage(message);
          }
          catch (StorageException ex)
          {

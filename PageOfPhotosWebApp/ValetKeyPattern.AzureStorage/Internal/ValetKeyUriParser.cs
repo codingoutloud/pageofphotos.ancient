@@ -78,14 +78,14 @@ namespace ValetKeyPattern.AzureStorage
          Contract.Requires(valetKeyUri != null);
 
          if (ValetKeyUriParser.IsEmulated(valetKeyUri))
-         {
+         {  // Local Storage (DevFabric)
             Contract.Assert(valetKeyUri.IsLoopback);
             Contract.Assert(valetKeyUri.Port != 80 && valetKeyUri.Port != 443);
             Contract.Assert(valetKeyUri.Scheme != Uri.UriSchemeHttps);
             return new Uri(String.Format("{0}://{1}:{2}/{3}", Uri.UriSchemeHttp, valetKeyUri.Host, valetKeyUri.Port, Constants.CloudEmulatorStorageAccountName));
          }
-         else // Cloud Storage
-         {
+         else
+         {  // Cloud Storage
             Contract.Assert(valetKeyUri.Port == 80 || valetKeyUri.Port == 443);
             var scheme = valetKeyUri.Scheme;
             if (forceHttps)

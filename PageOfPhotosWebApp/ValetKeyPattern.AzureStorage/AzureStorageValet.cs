@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace ValetKeyPattern.AzureStorage
 {
@@ -20,6 +23,8 @@ namespace ValetKeyPattern.AzureStorage
       {
          ValetKeyUri = valetKeyUri;
       }
+
+      protected abstract Uri GetSpecificBaseUri();
 
       private const string UrlSchemeDefault = "https";
 
@@ -88,6 +93,41 @@ namespace ValetKeyPattern.AzureStorage
          return new Uri(hostUri, valetKeyUri.LocalPath);
       }
 
-      public string SasToken { get { return ValetKeyUri.Query; } }
+      private string SasToken { get { return ValetKeyUri.Query; } }
+
+      public Uri BaseUri
+      {
+         get
+         {
+            var aa = GetSpecificBaseUri();
+            var xx = ValetKeyUri.BaseUri();
+            var _x = new CloudQueueClient(xx, StorageCredentials);
+            var _y = CloudStorageAccount.DevelopmentStorageAccount.CreateCloudQueueClient();
+
+            if (ValetKeyUri.IsEmulated())
+            {
+               return GetSpecificBaseUri();
+            }
+            else
+            {
+               return ValetKeyUri.BaseUri();
+            }
+         }
+      }
+
+      public StorageCredentials StorageCredentials
+      {
+         get
+         {
+            if (ValetKeyUri.IsEmulated())
+            {
+               return CloudStorageAccount.DevelopmentStorageAccount.Credentials;
+            }
+            else
+            {
+               return new StorageCredentials(SasToken);
+            }
+         }
+      }
    }
 }

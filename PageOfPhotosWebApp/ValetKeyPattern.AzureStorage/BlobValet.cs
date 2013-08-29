@@ -58,6 +58,11 @@ namespace ValetKeyPattern.AzureStorage
          blockBlob.EndUploadFromStream(result);
       }
 
+      protected override Uri GetSpecificBaseUri()
+      {
+         return CloudStorageAccount.DevelopmentStorageAccount.CreateCloudBlobClient().BaseUri;
+      }
+
       /// <summary>
       /// Infer from Uri version
       /// </summary>
@@ -78,8 +83,7 @@ namespace ValetKeyPattern.AzureStorage
       /// <param name="byteCount">Count of bytes in the stream. Not used at this time. May be used in future to optimize the upload to blob storage, for telemetry, or to block uploads over a certain size.</param>
       public void UploadStream(Uri destinationUri, Stream stream, string mimeType = null, int? byteCount = null)
       {
-         var credentials = new StorageCredentials(SasToken);
-         var cloudBlob = new CloudBlockBlob(destinationUri, credentials);
+         var cloudBlob = new CloudBlockBlob(destinationUri, StorageCredentials);
 
          try
          {
