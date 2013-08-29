@@ -62,16 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlobContainerValetOperations.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="AzureStorageValet.cs" />
-    <Compile Include="BlobContainerValet2.cs" />
-    <Compile Include="ByteArraySerializer.cs" />
+    <Compile Include="Internal\ByteArraySerializer.cs" />
+    <Compile Include="BlobValet.cs" />
     <Compile Include="QueueValet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueueValetStorageOperations.cs" />
-    <Compile Include="ValetKeyUriValidator.cs" />
-    <Compile Include="ValetKeyUriParser.cs" />
+    <Compile Include="Internal\ValetKeyUriValidator.cs" />
+    <Compile Include="Internal\ValetKeyUriParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

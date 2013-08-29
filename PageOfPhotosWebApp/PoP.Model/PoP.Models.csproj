@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MediaRepresentation.cs" />
+    <Compile Include="MediaUploadModel.cs" />
     <Compile Include="PageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SlugModel.cs" />

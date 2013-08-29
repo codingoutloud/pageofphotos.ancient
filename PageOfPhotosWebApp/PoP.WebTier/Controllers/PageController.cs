@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using MediaRepository;
 using PoP.Models;
+using ValetKeyPattern.AzureStorage;
 
 namespace PoP.WebTier.Controllers
 {
@@ -85,8 +87,19 @@ namespace PoP.WebTier.Controllers
          foreach (var file in files.Where(file => file != null && file.ContentLength > 0))
          {
             Contract.Assert(file.FileName == Path.GetFileName(file.FileName)); // browsers should not send path info - but synthetic test could
-               
+            
+#if false
             AzureStorageHelper.CaptureUploadedMedia(file.InputStream, file.FileName, file.ContentType, file.ContentLength);
+#else
+            var destinationUrl = String.Format(ConfigurationManager.AppSettings["MediaStorageUrlFile.ExtTemplate"], Guid.NewGuid(), new FileInfo(file.FileName).Extension);
+            var blobValetKeyUrl = ConfigurationManager.AppSettings["MediaStorageValetKeyUrl"];
+            var queueValetKeyUrl = ConfigurationManager.AppSettings["MediaIngestionQueueValetKeyUrl"];
+
+            var blobValet = new BlobValet(blobValetKeyUrl);
+            var queueValet = new QueueValet(queueValetKeyUrl);
+
+            MediaRepository.MediaIngester.CaptureUploadedMedia(blobValet, queueValet, file.InputStream, file.FileName, file.ContentType, file.ContentLength, destinationUrl);
+#endif
             if (!firstFile) fileList += ", ";
             fileList += file.FileName;
             firstFile = false;

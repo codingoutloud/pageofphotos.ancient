@@ -27,6 +27,8 @@ Page of Photos - What to do?
 - RES - Can I ban an IP address? Is it effective? Is it "too" effective?
 - DO - Convert CredSwizzler to NuGet - http://msdn.microsoft.com/en-us/library/windowsazure/hh403989.aspx
 - DO - Claims for: MaxSizePhotoUploadBytes, AllowedFileUploadExtensions, MaxNumberPhotoUploads, Username, Roles: Member, Admin, SuperAdmin
+- DO - add AutoRepair concept - bool AutoRepair { get; set; }
+- DO - add full credentials option to AzureStorageVK
 
 _Move this list to Github once released._
 

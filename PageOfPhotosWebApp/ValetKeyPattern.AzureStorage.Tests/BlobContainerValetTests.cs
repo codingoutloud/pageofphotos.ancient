@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+// ReSharper disable InconsistentNaming
+
 namespace ValetKeyPattern.AzureStorage.Tests
 {
    [TestClass]
@@ -24,22 +26,24 @@ namespace ValetKeyPattern.AzureStorage.Tests
       [TestMethod]
       public void ValetKey_GetPathFromValidValetKey_Succeeds()
       {
-         var uri = BlobContainerValet2.GetDestinationPathFromValetKey(ValetKeyUrl);
-         Assert.IsNotNull(uri);
+         var blobValet = new BlobValet(ValetKeyUrl);
+         Assert.IsNotNull(blobValet);
       }
 
       [TestMethod]
       public void ValetKey_GetSasTokenFromSasUrl_Succeeds()
       {
-         var sasToken = BlobContainerValet2.GetSasTokenFromValetKeyUrl(ValetKeyUrl);
-         Assert.IsNotNull(sasToken);
-         Assert.IsTrue(sasToken[0] == '?');
+         var blobValet = new BlobValet(ValetKeyUrl);
+         Assert.IsNotNull(blobValet.SasToken);
+         Assert.IsTrue(blobValet.SasToken[0] == '?');
+         Assert.IsTrue(blobValet.SasToken.Length > 5);
       }
 
       [TestMethod]
       public void ValetKey_BuildDestinationUri_RetainsContainerName()
       {
-         var destinationUri = BlobContainerValet2.BuildDesinationUri(ValetKeyUrl, PublicFileUrl1);
+         var blobValet = new BlobValet(ValetKeyUrl);
+         var destinationUri = blobValet.BuildDestinationUri(ValetKeyUrl, PublicFileUrl1);
          Assert.AreEqual(destinationUri.AbsoluteUri, DestinationUrl1);
       }
 
@@ -47,12 +51,15 @@ namespace ValetKeyPattern.AzureStorage.Tests
       [TestCategory("Integration")]
       public void ValetKey_UpdateBlobWithinContainer_Succeeds()
       {
-         BlobContainerValet2.UploadFile(ValetKeyUrl, PublicFileUrl1);
-         BlobContainerValet2.UploadFile(ValetKeyUrl, PublicFileUrl2);
-         BlobContainerValet2.UploadFile(ValetKeyUrl, PublicFileUrl1);
-         BlobContainerValet2.UploadFile(ValetKeyUrl, PublicFileUrl3);
+         var blobValet = new BlobValet(ValetKeyUrl);
+         blobValet.UploadFile(PublicFileUrl1);
+         blobValet.UploadFile(PublicFileUrl2);
+         blobValet.UploadFile(PublicFileUrl1);
+         blobValet.UploadFile(PublicFileUrl3);
 
          // should be up there!
       }
    }
 }
+
+// ReSharper restore InconsistentNaming

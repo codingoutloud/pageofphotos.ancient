@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+// ReSharper disable InconsistentNaming
+
 namespace ValetKeyPattern.AzureStorage.Tests
 {
    [TestClass]
@@ -16,3 +18,5 @@ namespace ValetKeyPattern.AzureStorage.Tests
       }
    }
 }
+
+// ReSharper restore InconsistentNaming

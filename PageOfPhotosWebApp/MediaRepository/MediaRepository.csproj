@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureStorageHelper.cs" />
+    <Compile Include="MediaIngester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +69,10 @@
     <ProjectReference Include="..\PoP.Model\PoP.Models.csproj">
       <Project>{a0c31bd5-67b9-4003-bd68-31639557a920}</Project>
       <Name>PoP.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ValetKeyPattern.AzureStorage\ValetKeyPattern.AzureStorage.csproj">
+      <Project>{E4C9DEE1-2A90-4D40-AD5B-65E110A6039F}</Project>
+      <Name>ValetKeyPattern.AzureStorage</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsAzureStorageCredentialsSwizzler\WindowsAzureStorageCredentialsSwizzler.csproj">
       <Project>{55658526-0C5C-4036-AC4B-55AF543E6FB2}</Project>

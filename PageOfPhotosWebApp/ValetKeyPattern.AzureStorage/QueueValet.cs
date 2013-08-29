@@ -11,16 +11,17 @@ namespace ValetKeyPattern.AzureStorage
 {
    public class QueueValet : AzureStorageValet
    {
-      public string QueueName { get { return ValetKeyUri.AbsolutePath.Substring(1); } }
-      private const bool AutoRepairDefault = true;
-      private const string UrlSchemeDefault = "https";
-      public Uri ValetKeyUri { get; private set; }
-      // TODO: add bool AutoRepair { get; set; }
-
-      public QueueValet(Uri valetKeyUri) // : base(uri.AbsoluteUri)
+      public string QueueName
       {
-         ValetKeyUri = valetKeyUri;
+         get { return ValetKeyUri.StoragePartitionName(); }
       }
+
+      public QueueValet(string url) : base(url)
+      {}
+
+      public QueueValet(Uri uri) : base(uri)
+      {}
+
 
 #if false
       public QueueValet CreateQueueValetUri(string storageAccountName, string queueName, string sasQueryString,
@@ -32,16 +33,33 @@ namespace ValetKeyPattern.AzureStorage
       }
 #endif
 
-      public bool IsValidValetUrl(string url)
+      /// <summary>
+      /// Extension method that adds a message to the queue. Accepts all the same parameters that 
+      /// CloudQueue.AddMessage accepts and passes them through.
+      /// </summary>
+      /// <param name="message">The message to add.</param>
+      /// <param name="timeToLive">The maximum time to allow the message to be in the queue, or null.</param>
+      /// <param name="initialVisibilityDelay">The length of time from now during which the message will be invisible. 
+      /// If <c>null</c> then the message will be visible immediately.</param>
+      /// <param name="options">An <see cref="T:Microsoft.WindowsAzure.Storage.Queue.QueueRequestOptions"/> object that 
+      /// specifies any additional options for the request.</param>
+      /// <param name="operationContext">An object that represents the context for the current operation.</param>
+      public void AddMessage(CloudQueueMessage message,
+         TimeSpan? timeToLive = null, TimeSpan? initialVisibilityDelay = null,
+         QueueRequestOptions options = null, OperationContext operationContext = null)
       {
-         return IsValidValetUri(new Uri(url));
-      }
-
-      public bool IsValidValetUri(Uri uri)
-      {
-         // TODO: add more tests
-         return uri.Query.Length > 1;
+         try
+         {
+            var queueCreds = new StorageCredentials(ValetKeyUri.Query);
+            var vkQueueClient = new CloudQueueClient(new Uri(String.Format("https://{0}", ValetKeyUri.Host)), queueCreds);
+            var queueRef = vkQueueClient.GetQueueReference(QueueName);
+            queueRef.AddMessage(message);
+         }
+         catch (StorageException ex)
+         {
+            System.Diagnostics.Trace.TraceError("Exception thrown: " + ex); // TODO: exception handling, dude
+            throw;
+         }
       }
    }
 }
-
