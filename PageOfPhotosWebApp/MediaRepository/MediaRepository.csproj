@@ -59,8 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureStorageHelper.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="MediaIngester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Table\UserMediaRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

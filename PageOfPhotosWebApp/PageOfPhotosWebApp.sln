@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValetKeyPattern.AzureStorag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValetKeyPattern.AzureStorage.Tests", "ValetKeyPattern.AzureStorage.Tests\ValetKeyPattern.AzureStorage.Tests.csproj", "{4BF85D81-E977-4B21-AF47-14E1F33E2B76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaRepository.Tests", "MediaRepository.Tests\MediaRepository.Tests.csproj", "{D5AE33B0-7112-4C19-B9A6-F668EBC87479}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{4BF85D81-E977-4B21-AF47-14E1F33E2B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BF85D81-E977-4B21-AF47-14E1F33E2B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BF85D81-E977-4B21-AF47-14E1F33E2B76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5AE33B0-7112-4C19-B9A6-F668EBC87479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5AE33B0-7112-4C19-B9A6-F668EBC87479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5AE33B0-7112-4C19-B9A6-F668EBC87479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5AE33B0-7112-4C19-B9A6-F668EBC87479}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
