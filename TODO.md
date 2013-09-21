@@ -8,10 +8,10 @@ Page of Photos - What to do?
 - MVP - Minor Edits to Profile for Owners (e.g., edit slug)
 - MVP - No Thumbnails (show originals only)
 - MVP - Require authentication for Page Upload (anyone can upload if they have an account - for now)
-- MVP - Requires that public popmedia container exists, and that popuploads exists and has a specific SAS called 'untrusted-uploader' with WRITE permission and is valid from anytime to 10 years from now
 
 **BACKLOG**
 
+- - Document istallation requirements, or make it self-installing
 - RES - How to make OOB experience (from github) easy - one part is to set everything to emulator, but then how to make transition to Cloud Service wicked easy? Generate the CloudService.cscfg?
 - BACK - Create Thumb, Display Thumbs, Link to Orig Photo from thumb (orig shown on one page or popup)
 - VKP - NuGet package
