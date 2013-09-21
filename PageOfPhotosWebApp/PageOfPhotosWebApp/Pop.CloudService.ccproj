@@ -37,14 +37,6 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PoP.Cache\PoP.Cache.csproj">
-      <Name>PoP.Cache</Name>
-      <Project>{b1a64df3-a1e8-4d57-b19b-c1d09c60aaaa}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>PoP.Cache</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
     <ProjectReference Include="..\PoP.ServiceTier\PoP.ServiceTier.csproj">
       <Name>PoP.ServiceTier</Name>
       <Project>{dea8b34d-96d5-422a-8cb2-47b2a76dff06}</Project>

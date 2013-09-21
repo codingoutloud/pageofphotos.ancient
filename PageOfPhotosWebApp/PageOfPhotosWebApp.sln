@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Pop.CloudService", "PageOfPhotosWebApp\Pop.CloudService.ccproj", "{1751B14C-EBDF-4A0A-8DFC-D4E99A1B6D16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoP.WebTier", "PoP.WebTier\PoP.WebTier.csproj", "{BC4ED06E-2487-4711-9019-8CDACDB1FFC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoP.ServiceTier", "PoP.ServiceTier\PoP.ServiceTier.csproj", "{DEA8B34D-96D5-422A-8CB2-47B2A76DFF06}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoP.Cache", "PoP.Cache\PoP.Cache.csproj", "{B1A64DF3-A1E8-4D57-B19B-C1D09C60AAAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaRepository", "MediaRepository\MediaRepository.csproj", "{BB0DBCB6-49BB-4388-BDE7-6AC298C69F06}"
 EndProject
@@ -58,10 +58,6 @@ Global
 		{DEA8B34D-96D5-422A-8CB2-47B2A76DFF06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEA8B34D-96D5-422A-8CB2-47B2A76DFF06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEA8B34D-96D5-422A-8CB2-47B2A76DFF06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1A64DF3-A1E8-4D57-B19B-C1D09C60AAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1A64DF3-A1E8-4D57-B19B-C1D09C60AAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1A64DF3-A1E8-4D57-B19B-C1D09C60AAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1A64DF3-A1E8-4D57-B19B-C1D09C60AAAA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB0DBCB6-49BB-4388-BDE7-6AC298C69F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB0DBCB6-49BB-4388-BDE7-6AC298C69F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB0DBCB6-49BB-4388-BDE7-6AC298C69F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
