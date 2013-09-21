@@ -141,15 +141,33 @@ namespace ValetKeyPattern.AzureStorage
       private void BlockBlobUploadCompleteAndSetMimeType(IAsyncResult result)
       {
          var blockBlob = (CloudBlockBlob)result.AsyncState;
-         blockBlob.EndUploadFromStream(result);
 
+         string mimeType = GetSupportedMimeTypeFromFileName(blockBlob.Name);
+         if (mimeType != UnknownMimeType)
+         {
+            // PoP does not want to upload files that are not supported - though we should usually not get this far in the processing
 
-         string mimeType = "image/png";
+            blockBlob.EndUploadFromStream(result);
 
+            blockBlob.Properties.ContentType = mimeType;
+            blockBlob.Properties.CacheControl = "";
+            blockBlob.BeginSetProperties(ar => (ar.AsyncState as CloudBlockBlob).EndSetProperties(ar), blockBlob);
+         }
+      }
 
-         blockBlob.Properties.ContentType = mimeType;
-         blockBlob.Properties.CacheControl = "";
-         blockBlob.BeginSetProperties(ar => (ar.AsyncState as CloudBlockBlob).EndSetProperties(ar), blockBlob);
+      const string UnknownMimeType = "application/octet-stream"; // "application/unknown"
+      // For reals might want to allow different users to have Claims which allow different mime types - for example, certain users are allowed video
+      private string GetSupportedMimeTypeFromFileName(string filename)
+      {
+         var mimetype = System.Web.MimeMapping.GetMimeMapping(filename);
+         switch (mimetype)
+         {
+            case "image/png":
+            case "image/jpeg":
+               return mimetype;
+            default:
+               return UnknownMimeType;
+         }
       }
 
       protected override Uri GetSpecificBaseUri()
