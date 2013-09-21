@@ -8,6 +8,7 @@ Page of Photos - What to do?
 - MVP - Minor Edits to Profile for Owners (e.g., edit slug)
 - MVP - No Thumbnails (show originals only)
 - MVP - Require authentication for Page Upload (anyone can upload if they have an account - for now)
+- MVP - Requires that public popmedia container exists, and that popuploads exists and has a specific SAS called 'untrusted-uploader' with WRITE permission and is valid from anytime to 10 years from now
 
 **BACKLOG**
 
