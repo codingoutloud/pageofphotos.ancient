@@ -16,30 +16,56 @@ namespace ValetKeyPattern.AzureStorage
    {
       public Uri ValetKeyUri { get; protected set; }
 
-      protected AzureStorageValet(string valetKeyUrl) : this(new Uri(valetKeyUrl))
-      {}
+      protected AzureStorageValet(string valetKeyUrl)
+         : this(new Uri(valetKeyUrl))
+      { }
 
       protected AzureStorageValet(Uri valetKeyUri)
       {
          ValetKeyUri = valetKeyUri;
       }
 
+      internal bool IsEmulated()
+      {
+         return ValetKeyUri.IsEmulated();
+      }
+
+      public static bool IsValidValetKeyUrl(string url)
+      {
+         if (String.IsNullOrWhiteSpace(url)) return false;
+         return IsValidValetKeyUri(new Uri(url));
+      }
+
+      public static bool IsValidValetKeyUri(Uri uri)
+      {
+         if (uri.Query.Length < 1) return false;
+
+         var sas = uri.Query;
+         if (sas.Contains("%2B")) return false; // should probably be "+"
+         if (sas.Contains("%2F")) return false; // should probably be "/"
+         if (sas.Contains("%3A")) return false; // should probably be ":"
+         if (sas.Contains("%3D")) return false; // should probably be "="
+
+         return true;
+      }
+
       protected abstract Uri GetSpecificBaseUri();
 
       private const string UrlSchemeDefault = "https";
 
-      internal bool IsValidValetUrl(string url)
+
+      internal bool IsValidValetUrl(string url)// TODO: deprecate
       {
          return IsValidValetUri(new Uri(url));
       }
 
-      internal bool IsValidValetUri(Uri uri)
+      internal bool IsValidValetUri(Uri uri)//TODO: deprecate
       {
          // TODO: add more tests
          return uri.Query.Length > 1;
       }
 
-      internal bool IsValidValetKey(string valetKeyUrl)
+      internal bool IsValidValetKey(string valetKeyUrl) //TODO: deprecate
       {
          return IsValidValetKey(new Uri(valetKeyUrl));
       }
@@ -49,7 +75,7 @@ namespace ValetKeyPattern.AzureStorage
       /// </summary>
       /// <param name="valetKeyUri"></param>
       /// <returns></returns>
-      internal virtual bool IsValidValetKey(Uri valetKeyUri)
+      internal virtual bool IsValidValetKey(Uri valetKeyUri) // TODO: deprecate
       {
          return !String.IsNullOrEmpty(valetKeyUri.Query);
       }
@@ -89,6 +115,10 @@ namespace ValetKeyPattern.AzureStorage
       internal Uri GetDestinationPath(string valetKeyUrl)
       {
          var valetKeyUri = new Uri(valetKeyUrl);
+         return GetDestinationPath(valetKeyUri);
+      }
+      internal Uri GetDestinationPath(Uri valetKeyUri)
+      {
          var hostUri = new Uri(String.Format("{0}://{1}", valetKeyUri.Scheme, valetKeyUri.Host));
          return new Uri(hostUri, valetKeyUri.LocalPath);
       }
