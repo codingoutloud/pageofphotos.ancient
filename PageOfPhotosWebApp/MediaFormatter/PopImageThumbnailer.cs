@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MediaFormatter
 {
-   public class PopImageThumbnailer
+   public class PopImageThumbnailer // TODO: really ought to be just generic Thumbnailer class with constructor that accepts list of allowed mime types
    {
       public static Image GetThumbnail(Image origImage)
       {
@@ -23,12 +23,9 @@ namespace MediaFormatter
       public static Stream ConvertImageToStream(Image image, string mimeType)
       {
          var ms = new MemoryStream();
-#if false
-         var formatter = new BinaryFormatter();
-         formatter.Serialize(ms, image);
-#else
+         // following line also works in lieue of image.Save - pros and cons?
+         // new BinaryFormatter().Serialize(ms, image);
          image.Save(ms, MapMimeTypeToImageFormat(mimeType));
-#endif
          ms.Position = 0; // else we'll get Microsoft.WindowsAzure.Storage.StorageException, HResult=-2146233088, Message=Cannot access a closed file.
 
          return ms;

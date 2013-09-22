@@ -6,6 +6,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Http;
 using DevPartners.Azure;
+using MediaRepository.Table;
+using Microsoft.WindowsAzure.Storage;
 using ValetKeyPattern.AzureStorage;
 using PoP.Models;
 
@@ -102,8 +104,10 @@ namespace PoP.ServiceTier
          }
 #endif
 
-         // indicate available for this account
-         // TODO: HOW? write to TABLE STORAGE
+         // now attach it to an account
+         var userMediaRepo = new UserMediaRepository(CloudStorageAccount.DevelopmentStorageAccount, "usermedia");
+         var userMedia = new UserMedia(1, 0);
+         userMediaRepo.Insert(userMedia);
       }
    }
 }

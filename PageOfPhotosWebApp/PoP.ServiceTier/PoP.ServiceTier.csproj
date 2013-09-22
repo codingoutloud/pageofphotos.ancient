@@ -83,6 +83,10 @@
       <Project>{ba5f3df9-f190-4c6e-aef3-d73985cd41be}</Project>
       <Name>MediaFormatter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MediaRepository\MediaRepository.csproj">
+      <Project>{BB0DBCB6-49BB-4388-BDE7-6AC298C69F06}</Project>
+      <Name>MediaRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PoP.Model\PoP.Models.csproj">
       <Project>{a0c31bd5-67b9-4003-bd68-31639557a920}</Project>
       <Name>PoP.Models</Name>

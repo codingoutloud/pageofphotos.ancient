@@ -39,17 +39,26 @@ namespace MediaRepository
                // if that worked, notify via queue
                var mediaIngestionQueueValetKeyUrl = ConfigurationManager.AppSettings["MediaIngestionQueueValetKeyUrl"];
 #endif
-            blobValet.UploadStream(new Uri(destinationUrl), mediaByteStream, mimeType);
+            blobValet.UploadStream(new Uri(destinationUrl), mediaByteStream, mimeType); // TODO: at moment is sync (not async) to avoid race condition mentioned below
             var info = new MediaUploadModel
             {
-                          BlobUrl = destinationUrl,
-                          Username = "codingoutloud"
-                       };
+               BlobUrl = destinationUrl,
+               Username = "codingoutloud"
+            };
+
+            // prep  an arbitrary object to send on the queue, not just a string (not rich enough for our use case)
             var queueMessage = new CloudQueueMessage(ByteArraySerializer<MediaUploadModel>.Serialize(info));
+
             // TODO: race condition when both uploading a BLOB and posting the Queue message - the queue message processing
             // TODO: ... can begin before the blob upload is complete -- need to sync these
-            // TODO: ... BUT! for now it will still FUNCTION CORRECTLY (if inefficiently) due to Queue-Centric Workflow Pattern doing its retries
-            queueValet.AddMessage(queueMessage); // send an arbitrary object on the queue, not just a string 
+            // TODO: ... BUT! for now it will still FUNCTION CORRECTLY (if inefficiently) due to Queue-Centric Workflow Pattern retries IF not determined to be a Poison Message
+
+            // There is no real need for a 50ms delay before the message can appear in queue, but just showing how to do it.
+            // Technique is sometimes useful when there's a reason to delay its processing. You could use it to implement a
+            // scheduler, for example. In the case of PoP, there are no obvious use cases. A made-up use case might be if PoP
+            // introduced a way to make photos show up in the future allowing the user uploading them to indicate PoP should
+            // delay processing for, say, up to 24 hours, and let the user optionally specify a delay within that range.
+            queueValet.AddMessage(queueMessage, initialVisibilityDelay: TimeSpan.FromMilliseconds(50));
          }
          catch (StorageException ex)
          {
