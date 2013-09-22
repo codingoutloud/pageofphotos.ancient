@@ -112,7 +112,6 @@ namespace PoP.ServiceTier
             StorageFormat = origMime,
             Url = origImageUrl,
             ThumbUrl = thumbUrl,
-            // ETag = "*",  // TODO: << == bad idea, fix
             UserName = "codingoutloud" // TODO: << may not want to store this long-term since we have UserId (in SQL Azure)
          };
          userMediaRepo.Insert(userMedia);
