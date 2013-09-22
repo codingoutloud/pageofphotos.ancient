@@ -129,11 +129,6 @@ namespace ValetKeyPattern.AzureStorage
       {
          get
          {
-            var aa = GetSpecificBaseUri();
-            var xx = ValetKeyUri.BaseUri();
-            var _x = new CloudQueueClient(xx, StorageCredentials);
-            var _y = CloudStorageAccount.DevelopmentStorageAccount.CreateCloudQueueClient();
-
             if (ValetKeyUri.IsEmulated())
             {
                return GetSpecificBaseUri();
