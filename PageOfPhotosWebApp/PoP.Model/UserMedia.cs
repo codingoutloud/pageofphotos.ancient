@@ -19,6 +19,9 @@ namespace PoP.Models
         public int Order { get; set; }
         public string Type { get; set; }
         public string StorageFormat { get; set; }
+        public string Url { get; set; }
+        public string ThumbUrl { get; set; }
+        public string UserName { get; set; }
 
         // this empty constructor is required to support Microsoft.WindowsAzure.Storage.Table.TableQuery class,
         // which requires a parameterless constructor due to the new constraint on TElement

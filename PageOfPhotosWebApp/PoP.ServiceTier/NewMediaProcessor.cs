@@ -83,7 +83,8 @@ namespace PoP.ServiceTier
          var origImage = Image.FromStream(origStream);
 
          // create thumb version of image
-         var thumbUri = new Uri(BuildThumbnailVersionOfBlobUrl(origImageUrl));
+         var thumbUrl = BuildThumbnailVersionOfBlobUrl(origImageUrl);
+         var thumbUri = new Uri(thumbUrl);
          var thumbMime = origMime;
 #if true
          var thumbStream = MediaFormatter.PopImageThumbnailer.GetThumbnailStream(origImage, thumbMime);
@@ -106,7 +107,14 @@ namespace PoP.ServiceTier
 
          // now attach it to an account
          var userMediaRepo = new UserMediaRepository(CloudStorageAccount.DevelopmentStorageAccount, "usermedia");
-         var userMedia = new UserMedia(1, 0);
+         var userMedia = new UserMedia(1, new Random().Next(3, 4315))
+         {
+            StorageFormat = origMime,
+            Url = origImageUrl,
+            ThumbUrl = thumbUrl,
+            // ETag = "*",  // TODO: << == bad idea, fix
+            UserName = "codingoutloud" // TODO: << may not want to store this long-term since we have UserId (in SQL Azure)
+         };
          userMediaRepo.Insert(userMedia);
       }
    }
