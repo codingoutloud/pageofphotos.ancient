@@ -9,30 +9,20 @@ namespace DevPartners.Azure
    {
       public static byte[] Serialize(T m)
       {
-         var ms = new MemoryStream();
-         try
+         using (var ms = new MemoryStream())
          {
             var formatter = new BinaryFormatter();
             formatter.Serialize(ms, m);
             return ms.ToArray();
          }
-         finally
-         {
-            ms.Close();
-         }
       }
 
       public static T Deserialize(byte[] byteArray)
       {
-         var ms = new MemoryStream(byteArray);
-         try
+         using (var ms = new MemoryStream(byteArray))
          {
             var formatter = new BinaryFormatter();
             return (T)formatter.Deserialize(ms);
-         }
-         finally
-         {
-            ms.Close();
          }
       }
    }

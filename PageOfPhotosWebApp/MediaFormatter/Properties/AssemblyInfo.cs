@@ -5,15 +5,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WindowsAzureStorageCredentialsSwizzler")]
+[assembly: AssemblyTitle("MediaFormatter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Development Partners Software Corporation")]
-[assembly: AssemblyProduct("WindowsAzureStorageCredentialsSwizzler")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("MediaFormatter")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("WindowsAzureStorageCredentialsSwizzler.Tests.Unit")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("be3d7767-3481-49e4-a685-ca9cbfa07368")]
+[assembly: Guid("5292cb9b-827e-4391-8bf2-febb8b2b0dbd")]
 
 // Version information for an assembly consists of the following four values:
 //

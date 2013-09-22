@@ -7,13 +7,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
-using Microsoft.WindowsAzure.Storage.Shared.Protocol;
 
 namespace ValetKeyPattern.AzureStorage
 {
@@ -126,38 +122,43 @@ namespace ValetKeyPattern.AzureStorage
 #endif
 
       /// <summary>
-      /// Upload the blob and then (if nothing went wrong) drop a message on the queue announcing the blob
-      /// </summary>
-      /// <param name="stream">Might be from File Upload via web page</param>
-      /// <param name="origFilename"></param>
-      public void UploadStreamToBlob(Stream stream, string origFilename, string origMimeType, int byteCount)
-      {
-      }
-
-      /// <summary>
       /// Clean up stream object.
       /// </summary>
       /// <param name="result"></param>
       private void BlockBlobUploadCompleteAndSetMimeType(IAsyncResult result)
       {
-         var blockBlob = (CloudBlockBlob)result.AsyncState;
-
-         string mimeType = GetSupportedMimeTypeFromFileName(blockBlob.Name);
-         if (mimeType != UnknownMimeType)
+         try
          {
-            // PoP does not want to upload files that are not supported - though we should usually not get this far in the processing
+            var blockBlob = (CloudBlockBlob) result.AsyncState;
 
-            blockBlob.EndUploadFromStream(result);
+            string mimeType = GetSupportedMimeTypeFromFileName(blockBlob.Name);
+            if (mimeType != UnknownMimeType)
+            {
+               // PoP does not want to upload files that are not supported - though we should usually not get this far in the processing
 
-            blockBlob.Properties.ContentType = mimeType;
-            blockBlob.Properties.CacheControl = "";
-            blockBlob.BeginSetProperties(ar => (ar.AsyncState as CloudBlockBlob).EndSetProperties(ar), blockBlob);
+               blockBlob.EndUploadFromStream(result);
+
+               blockBlob.Properties.ContentType = mimeType;
+               blockBlob.Properties.CacheControl = "";
+               blockBlob.BeginSetProperties(ar => (ar.AsyncState as CloudBlockBlob).EndSetProperties(ar), blockBlob);
+            }
+            else
+            {
+               throw new ArgumentException("Don't know how to handle mime type of " + mimeType + " within IAsyncResult for blob to be named " + blockBlob.Name, "result");
+            }
+         }
+         catch (Exception ex)
+         {
+            Trace.TraceError("Exception when mopping up a BlockBlobUploadCompleteAndSetMimeType sorta thing - blob name => {0} - ex [{1}] / [{2}]", ((CloudBlockBlob)result.AsyncState).Name,
+               ex.GetBaseException(), ex);
+            // TODO: WHAT ELSE YOU GOT?
+            throw;
          }
       }
 
       const string UnknownMimeType = "application/octet-stream"; // "application/unknown"
       // For reals might want to allow different users to have Claims which allow different mime types - for example, certain users are allowed video
-      private string GetSupportedMimeTypeFromFileName(string filename)
+      public string GetSupportedMimeTypeFromFileName(string filename)
       {
          var mimetype = System.Web.MimeMapping.GetMimeMapping(filename);
          switch (mimetype)
@@ -176,15 +177,16 @@ namespace ValetKeyPattern.AzureStorage
       }
 
       /// <summary>
-      /// Infer from Uri version
+      /// Full blob Uri is figured out using the storage account and container already known to the BlobValet, then appending blobFileName
       /// </summary>
-      /// <param name="destinationUrl"></param>
+      /// <param name="blobFileName"></param>
       /// <param name="stream"></param>
       /// <param name="mimeType"></param>
       /// <param name="byteCount">Count of bytes in the stream. Not used at this time. May be used in future to optimize the upload to blob storage, for telemetry, or to block uploads over a certain size.</param>
-      public void UploadStream(string destinationUrl, Stream stream, string mimeType = null, int? byteCount = null)
+      public void UploadStreamToBlob(string blobFileName, Stream stream, string mimeType = null, int? byteCount = null)
       {
-         UploadStream(new Uri(destinationUrl), stream, mimeType, byteCount);
+         var destinationUri = new Uri(String.Format("https://{0}.blob.code.windows.net/{1}/{2}", StorageCredentials.AccountName, ContainerName, blobFileName));
+         UploadStream(destinationUri, stream, mimeType, byteCount);
       }
 
       /// <summary>
@@ -199,7 +201,7 @@ namespace ValetKeyPattern.AzureStorage
 
          try
          {
-#if true
+#if false
             cloudBlob.BeginUploadFromStream(stream,
                AccessCondition.GenerateEmptyCondition(),
                new BlobRequestOptions
@@ -210,9 +212,16 @@ namespace ValetKeyPattern.AzureStorage
                null,
                BlockBlobUploadCompleteAndSetMimeType,
                cloudBlob); // TODO: change to struct that passes in both blob and mimetype
-#endif
+#else
+            cloudBlob.UploadFromStream(stream,
+               AccessCondition.GenerateEmptyCondition(),
+               new BlobRequestOptions
+               {
+                  RetryPolicy =
+                     new ExponentialRetry(TimeSpan.FromSeconds(3), 5)
+               },
+               null);
 
-#if false
             cloudBlob.Properties.ContentType = mimeType;
             cloudBlob.Properties.CacheControl = "";
             cloudBlob.BeginSetProperties(ar => (ar.AsyncState as CloudBlockBlob).EndSetProperties(ar), cloudBlob);
@@ -298,8 +307,6 @@ namespace ValetKeyPattern.AzureStorage
       public void AppendToBlob(Uri destinationUri, string text)
       {
          var cloudBlob = new CloudBlockBlob(destinationUri, StorageCredentials);
-
-         var newBlockList = new List<string>();
 
          var stream = CreateStreamFromString(text);
          try
@@ -405,7 +412,6 @@ namespace ValetKeyPattern.AzureStorage
          var nextBlockNumber = 0;
          var blockId1 = FormatBlockBlobNumber(1);
          var blockId40000 = FormatBlockBlobNumber(40000);
-         var sameLen = blockId1.Length == blockId40000.Length;
 
          var blockId = FormatBlockBlobNumber(nextBlockNumber);
          var previousBlockCount = 0;

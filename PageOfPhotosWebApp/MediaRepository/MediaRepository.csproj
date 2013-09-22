@@ -41,8 +41,9 @@
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.Storage.2.0.6.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WindowsAzure.Storage.2.1.0.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -58,7 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureStorageHelper.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="MediaIngester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,10 +75,6 @@
     <ProjectReference Include="..\ValetKeyPattern.AzureStorage\ValetKeyPattern.AzureStorage.csproj">
       <Project>{E4C9DEE1-2A90-4D40-AD5B-65E110A6039F}</Project>
       <Name>ValetKeyPattern.AzureStorage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WindowsAzureStorageCredentialsSwizzler\WindowsAzureStorageCredentialsSwizzler.csproj">
-      <Project>{55658526-0C5C-4036-AC4B-55AF543E6FB2}</Project>
-      <Name>WindowsAzureStorageCredentialsSwizzler</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

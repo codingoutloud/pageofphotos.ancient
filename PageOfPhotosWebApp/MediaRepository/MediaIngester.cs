@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DevPartners.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -43,13 +39,16 @@ namespace MediaRepository
                // if that worked, notify via queue
                var mediaIngestionQueueValetKeyUrl = ConfigurationManager.AppSettings["MediaIngestionQueueValetKeyUrl"];
 #endif
-            blobValet.UploadStream(destinationUrl, mediaByteStream, mimeType);
-            var info = new MediaUploadModel()
-                       {
+            blobValet.UploadStream(new Uri(destinationUrl), mediaByteStream, mimeType);
+            var info = new MediaUploadModel
+            {
                           BlobUrl = destinationUrl,
                           Username = "codingoutloud"
                        };
             var queueMessage = new CloudQueueMessage(ByteArraySerializer<MediaUploadModel>.Serialize(info));
+            // TODO: race condition when both uploading a BLOB and posting the Queue message - the queue message processing
+            // TODO: ... can begin before the blob upload is complete -- need to sync these
+            // TODO: ... BUT! for now it will still FUNCTION CORRECTLY (if inefficiently) due to Queue-Centric Workflow Pattern doing its retries
             queueValet.AddMessage(queueMessage); // send an arbitrary object on the queue, not just a string 
          }
          catch (StorageException ex)

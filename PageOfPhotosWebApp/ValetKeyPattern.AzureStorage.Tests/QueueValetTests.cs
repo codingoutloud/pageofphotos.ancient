@@ -9,12 +9,17 @@ namespace ValetKeyPattern.AzureStorage.Tests
    public class QueueValetTests
    {
       [TestMethod]
-      [Ignore]
-      public void BasicUsage()
+      public void QueueNameTest1()
       {
-         var queueValetKeyUrl = "";
-         var queueValetKeyUri = new Uri(queueValetKeyUrl);
-         //var queueClient = QueueValetStorageOperations.
+         var url = "http://127.0.0.1:10000/accountname/queuename";
+         Assert.AreEqual("queuename", new QueueValet(url).QueueName);
+      }
+
+      [TestMethod]
+      public void QueueNameTest2()
+      {
+         var url = "http://accountname.queue.core.windows.net/queuename?SomeQueryStringForNow";
+         Assert.AreEqual("queuename", new QueueValet(url).QueueName);
       }
    }
 }

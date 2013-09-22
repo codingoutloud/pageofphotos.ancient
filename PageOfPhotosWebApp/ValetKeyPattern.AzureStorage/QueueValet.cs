@@ -38,7 +38,63 @@ namespace ValetKeyPattern.AzureStorage
 #endif
 
       /// <summary>
-      /// Extension method that adds a message to the queue. Accepts all the same parameters that 
+      /// Wrapper method that adds a message to the queue. Accepts all the same parameters that 
+      /// CloudQueue.AddMessage accepts and passes them through.
+      ///
+      /// Gets a message from the queue using the default request options. This operation marks 
+      /// the retrieved message as invisible in the queue for the default visibility timeout period.
+      /// </summary>
+      /// <param name="visibilityTimeout">The visibility timeout interval.</param>
+      /// <param name="options">A <see cref="T:Microsoft.WindowsAzure.Storage.Queue.QueueRequestOptions"/> object 
+      ///   that specifies any additional options for the request. Specifying null will use the default request 
+      ///   options from the associated service client (<see cref="T:Microsoft.WindowsAzure.Storage.Queue.CloudQueueClient"/>).</param>
+      /// <param name="operationContext">An <see cref="T:Microsoft.WindowsAzure.Storage.OperationContext"/> object that represents 
+      ///   the context for the current operation. This object is used to track requests to the storage service, and to provide 
+      ///   additional runtime information about the operation.</param>
+      /// <returns>
+      /// A message.
+      /// </returns>
+      public CloudQueueMessage GetMessage(TimeSpan? visibilityTimeout = null, QueueRequestOptions options = null, OperationContext operationContext = null)
+      {
+         try
+         {
+            var cloudQueueClient = new CloudQueueClient(BaseUri, StorageCredentials);
+            var cloudQueue = cloudQueueClient.GetQueueReference(QueueName);
+            return cloudQueue.GetMessage(visibilityTimeout, options, operationContext);
+         }
+         catch (StorageException ex)
+         {
+            System.Diagnostics.Trace.TraceError("Exception thrown: " + ex); // TODO: exception handling, dude
+            throw;
+         }
+      }
+
+
+      /// <summary>
+      /// Wrapper method that adds a message to the queue. Accepts all the same parameters that 
+      /// CloudQueue.AddMessage accepts and passes them through.
+      /// 
+      /// Deletes a message.
+      /// </summary>
+      /// <param name="message">A message.</param><param name="options">A <see cref="T:Microsoft.WindowsAzure.Storage.Queue.QueueRequestOptions"/> object that specifies any additional options for the request. Specifying null will use the default request options from the associated service client (<see cref="T:Microsoft.WindowsAzure.Storage.Queue.CloudQueueClient"/>).</param><param name="operationContext">An <see cref="T:Microsoft.WindowsAzure.Storage.OperationContext"/> object that represents the context for the current operation. This object is used to track requests to the storage service, and to provide additional runtime information about the operation.</param>
+      [DoesServiceRequest]
+      public void DeleteMessage(CloudQueueMessage message, QueueRequestOptions options = null, OperationContext operationContext = null)
+      {
+         try
+         {
+            var cloudQueueClient = new CloudQueueClient(BaseUri, StorageCredentials);
+            var cloudQueue = cloudQueueClient.GetQueueReference(QueueName);
+            cloudQueue.DeleteMessage(message, options, operationContext);
+         }
+         catch (StorageException ex)
+         {
+            System.Diagnostics.Trace.TraceError("Exception thrown: " + ex); // TODO: exception handling, dude
+            throw;
+         }         
+      }
+
+      /// <summary>
+      /// Wrapper method that adds a message to the queue. Accepts all the same parameters that 
       /// CloudQueue.AddMessage accepts and passes them through.
       /// </summary>
       /// <param name="message">The message to add.</param>

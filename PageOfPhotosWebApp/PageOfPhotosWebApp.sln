@@ -30,15 +30,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".meta", ".meta", "{1CADF522
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoP.Models", "PoP.Model\PoP.Models.csproj", "{A0C31BD5-67B9-4003-BD68-31639557A920}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAzureStorageCredentialsSwizzler", "WindowsAzureStorageCredentialsSwizzler\WindowsAzureStorageCredentialsSwizzler.csproj", "{55658526-0C5C-4036-AC4B-55AF543E6FB2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsAzureStorageCredentialsSwizzler.Tests.Unit", "WindowsAzureStorageCredentialsSwizzler.Tests.Unit\WindowsAzureStorageCredentialsSwizzler.Tests.Unit.csproj", "{7DC02B45-0C60-447B-9046-C92AD8107B66}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValetKeyPattern.AzureStorage", "ValetKeyPattern.AzureStorage\ValetKeyPattern.AzureStorage.csproj", "{E4C9DEE1-2A90-4D40-AD5B-65E110A6039F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValetKeyPattern.AzureStorage.Tests", "ValetKeyPattern.AzureStorage.Tests\ValetKeyPattern.AzureStorage.Tests.csproj", "{4BF85D81-E977-4B21-AF47-14E1F33E2B76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaRepository.Tests", "MediaRepository.Tests\MediaRepository.Tests.csproj", "{D5AE33B0-7112-4C19-B9A6-F668EBC87479}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaFormatter", "MediaFormatter\MediaFormatter.csproj", "{BA5F3DF9-F190-4C6E-AEF3-D73985CD41BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,14 +68,6 @@ Global
 		{A0C31BD5-67B9-4003-BD68-31639557A920}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C31BD5-67B9-4003-BD68-31639557A920}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C31BD5-67B9-4003-BD68-31639557A920}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55658526-0C5C-4036-AC4B-55AF543E6FB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55658526-0C5C-4036-AC4B-55AF543E6FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55658526-0C5C-4036-AC4B-55AF543E6FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55658526-0C5C-4036-AC4B-55AF543E6FB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7DC02B45-0C60-447B-9046-C92AD8107B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7DC02B45-0C60-447B-9046-C92AD8107B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7DC02B45-0C60-447B-9046-C92AD8107B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7DC02B45-0C60-447B-9046-C92AD8107B66}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E4C9DEE1-2A90-4D40-AD5B-65E110A6039F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E4C9DEE1-2A90-4D40-AD5B-65E110A6039F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4C9DEE1-2A90-4D40-AD5B-65E110A6039F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -90,6 +80,10 @@ Global
 		{D5AE33B0-7112-4C19-B9A6-F668EBC87479}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5AE33B0-7112-4C19-B9A6-F668EBC87479}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5AE33B0-7112-4C19-B9A6-F668EBC87479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA5F3DF9-F190-4C6E-AEF3-D73985CD41BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA5F3DF9-F190-4C6E-AEF3-D73985CD41BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA5F3DF9-F190-4C6E-AEF3-D73985CD41BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA5F3DF9-F190-4C6E-AEF3-D73985CD41BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
