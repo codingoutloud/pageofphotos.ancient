@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.Storage.Blob;
 using ValetKeyPattern.AzureStorage;
 
 namespace PoP.ServiceTier
@@ -22,6 +23,8 @@ namespace PoP.ServiceTier
             var blobValetKeyUrl = ConfigurationManager.AppSettings["MediaStorageValetKeyUrl"];
             var blobValet = new BlobValet(blobValetKeyUrl);
 
+            InitStorage(queueValet, blobValet);
+
             while (true)
             {
                Trace.TraceInformation("Working on the next iteration from PoP.ServiceTier.Run");
@@ -35,6 +38,20 @@ namespace PoP.ServiceTier
             Trace.TraceError("PoP.ServiceTier.Run has detected an uncaught exception was thrown - this should never happen", "Error");
             throw;
          }
+      }
+
+      private static void InitStorage(QueueValet queueValet, BlobValet blobValet)
+      {
+          queueValet.CreateQueue("media-ingestion");
+          blobValet.CreateBlobContainer("popmedia", true);
+          var container = blobValet.CreateBlobContainer("popuploads", false);
+
+          string sasPolicy = BlobValet.CreateBlobSASPolicy(
+              container,
+              "untrusted-uploader",
+              DateTime.UtcNow.AddYears(10),
+              new SharedAccessBlobPermissions[] { SharedAccessBlobPermissions.Write }
+          );
       }
 
       public override bool OnStart()

@@ -120,5 +120,24 @@ namespace ValetKeyPattern.AzureStorage
             throw;
          }
       }
+
+      public CloudQueue CreateQueue(string queueName)
+      {
+          return CreateQueue(BaseUri, StorageCredentials, queueName);
+      }
+
+      #region static methods
+
+          private static CloudQueue CreateQueue(Uri baseUri, StorageCredentials storageCredentials, string queueName)
+          {
+              // Get queue reference by queue name and create if it does not exist
+              var cloudQueueClient = new CloudQueueClient(baseUri, storageCredentials);
+              CloudQueue queue = cloudQueueClient.GetQueueReference(queueName);
+              queue.CreateIfNotExists();
+             
+              return queue;
+          }
+        
+      #endregion
    }
 }

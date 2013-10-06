@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
 
@@ -460,5 +461,61 @@ namespace ValetKeyPattern.AzureStorage
          // blocklist.Add(blockId);
          // blob.PutBlockList(blocklist); 
       }
+
+
+      public CloudBlobContainer CreateBlobContainer(string containerName, bool isPublic = false)
+      {
+          return CreateBlobContainer(BaseUri, StorageCredentials, containerName, isPublic);
+      }
+
+      #region static methods
+
+          public static string CreateBlobSASPolicy(CloudBlobContainer container, string policyName, DateTimeOffset expiry, IEnumerable<SharedAccessBlobPermissions> permissions)
+          {
+              BlobContainerPermissions blobPermissions = new BlobContainerPermissions();
+
+              // Create SAS policy setting expiration and permissions that are passed in.
+              blobPermissions.SharedAccessPolicies.Add(policyName, new SharedAccessBlobPolicy()
+              {
+                  // To ensure SAS is valid immediately, don’t set start time.
+                  // This way, you can avoid failures caused by small clock differences.
+                  SharedAccessExpiryTime = expiry,
+                  Permissions = SharedAccessBlobPermissions.Write
+              });
+
+              // Set SAS policy on the container.
+              container.SetPermissions(blobPermissions);
+
+              // return shared access signature to share with users.
+              return container.GetSharedAccessSignature(new SharedAccessBlobPolicy(), policyName);
+          }
+
+          private static CloudBlobContainer CreateBlobContainer(Uri baseUri, StorageCredentials storageCredentials, string containerName, bool isBlobPublic)
+          {
+              // Get container reference by container name and create if it does not exist
+              var cloudBlobClient = new CloudBlobClient(baseUri, storageCredentials);
+              CloudBlobContainer container = cloudBlobClient.GetContainerReference(containerName);
+              container.CreateIfNotExists();
+
+              BlobContainerPermissions blobPermissions = new BlobContainerPermissions();
+
+              if (isBlobPublic)
+              {
+                  // set blob level access as public 
+                  blobPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
+              }
+              else
+              {
+                  // set blob and container access as private
+                  blobPermissions.PublicAccess = BlobContainerPublicAccessType.Off;
+              }
+
+              // Set the permission policy on the container.
+              container.SetPermissions(blobPermissions);
+
+              return container;
+          }
+
+      #endregion
    }
 }
