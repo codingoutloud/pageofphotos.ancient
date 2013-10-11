@@ -16,7 +16,7 @@ namespace PoP.Models
     public class UserMedia : TableEntity
     {
         public int UserId { get; set; }
-        public int Order { get; set; }
+        public string UserMediaId { get; set; }
         public string Type { get; set; }
         public string StorageFormat { get; set; }
         public string Url { get; set; }
@@ -32,12 +32,16 @@ namespace PoP.Models
         // constructor overload that take elements needed to create partition and row keys.  
         // Additionally creates and sets the keys as a convience so developer does not worry
         // about setting keys in the application layer.
-        public UserMedia(int userId, int order)
+        public UserMedia(int userId)
         {
-            UserId = userId;
-            Order = order;
+            // http://stackoverflow.com/questions/417108/why-are-there-dashes-in-a-net-guid
+            // create guid and remove dashes as they are extraneous
+            string userMediaId = Guid.NewGuid().ToString().Replace("-","");
 
-            SetKeys(FormatPartitionKey(userId), FormatRowKey(order));
+            UserId = userId;
+            UserMediaId = userMediaId;
+
+            SetKeys(FormatPartitionKey(userId), FormatRowKey(userMediaId));
         }
 
         private void SetKeys(string partitionKey, string rowKey)
@@ -55,9 +59,9 @@ namespace PoP.Models
 
         // format of unique identifier for an entity within a partition, 
         // second part of an entity's primary key
-        public static string FormatRowKey(int order)
+        public static string FormatRowKey(string userMediaId)
         {
-            return order.ToString();
+            return userMediaId;
         }
     }
 }

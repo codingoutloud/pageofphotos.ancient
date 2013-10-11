@@ -34,7 +34,7 @@ namespace MediaRepository.Tests.Unit
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            UserMedia1 = new UserMedia(1, 1)
+            UserMedia1 = new UserMedia(1)
             {
                 StorageFormat = "Test",
                 Type = "Test"
@@ -73,10 +73,10 @@ namespace MediaRepository.Tests.Unit
         {
             _repo.Insert(UserMedia1);
 
-            UserMedia returnedEntity = _repo.GetEntity(UserMedia.FormatPartitionKey(UserMedia1.UserId), UserMedia.FormatRowKey(UserMedia1.Order));
+            UserMedia returnedEntity = _repo.GetEntity(UserMedia.FormatPartitionKey(UserMedia1.UserId), UserMedia.FormatRowKey(UserMedia1.UserMediaId));
 
             Assert.AreEqual(UserMedia1.UserId, returnedEntity.UserId, "UserId does not match");
-            Assert.AreEqual(UserMedia1.Order, returnedEntity.Order, "Order does not match");
+            Assert.AreEqual(UserMedia1.UserMediaId, returnedEntity.UserMediaId, "Order does not match");
             Assert.AreEqual(UserMedia1.StorageFormat, returnedEntity.StorageFormat, "StorageFormat does not match");
             Assert.AreEqual(UserMedia1.Type, returnedEntity.Type, "Type does not match");
         }
@@ -91,7 +91,7 @@ namespace MediaRepository.Tests.Unit
 
             Assert.IsFalse(insertTask.IsFaulted, "Task is faulted");
             Assert.AreEqual(UserMedia1.UserId, returnedEntity.UserId, "UserId does not match");
-            Assert.AreEqual(UserMedia1.Order, returnedEntity.Order, "Order does not match");
+            Assert.AreEqual(UserMedia1.UserMediaId, returnedEntity.UserMediaId, "Order does not match");
             Assert.AreEqual(UserMedia1.StorageFormat, returnedEntity.StorageFormat, "StorageFormat does not match");
             Assert.AreEqual(UserMedia1.Type, returnedEntity.Type, "Type does not match");
         }
@@ -104,7 +104,7 @@ namespace MediaRepository.Tests.Unit
             for (int i = 1; i <= 150; i++)
             {
                 userMediaList.Add(
-                    new UserMedia(1, i)
+                    new UserMedia(1)
                     {
                         StorageFormat = "Test",
                         Type = "Test"
@@ -123,10 +123,10 @@ namespace MediaRepository.Tests.Unit
         {
             _repo.Insert(UserMedia1);
 
-            UserMedia returnedEntity = _repo.GetEntity(UserMedia.FormatPartitionKey(UserMedia1.UserId), UserMedia.FormatRowKey(UserMedia1.Order));
+            UserMedia returnedEntity = _repo.GetEntity(UserMedia.FormatPartitionKey(UserMedia1.UserId), UserMedia.FormatRowKey(UserMedia1.UserMediaId));
 
             Assert.AreEqual(UserMedia1.UserId, returnedEntity.UserId, "UserId does not match");
-            Assert.AreEqual(UserMedia1.Order, returnedEntity.Order, "Order does not match");
+            Assert.AreEqual(UserMedia1.UserMediaId, returnedEntity.UserMediaId, "Order does not match");
             Assert.AreEqual(UserMedia1.StorageFormat, returnedEntity.StorageFormat, "StorageFormat does not match");
             Assert.AreEqual(UserMedia1.Type, returnedEntity.Type, "Type does not match");
         }
@@ -136,13 +136,13 @@ namespace MediaRepository.Tests.Unit
         {
             _repo.Insert(UserMedia1);
 
-            Task<TableResult> getTask = _repo.GetEntityAsync(UserMedia.FormatPartitionKey(UserMedia1.UserId), UserMedia.FormatRowKey(UserMedia1.Order));
+            Task<TableResult> getTask = _repo.GetEntityAsync(UserMedia.FormatPartitionKey(UserMedia1.UserId), UserMedia.FormatRowKey(UserMedia1.UserMediaId));
             getTask.Wait();
 
             UserMedia returnedEntity = (UserMedia)getTask.Result.Result;
 
             Assert.AreEqual(UserMedia1.UserId, returnedEntity.UserId, "UserId does not match");
-            Assert.AreEqual(UserMedia1.Order, returnedEntity.Order, "Order does not match");
+            Assert.AreEqual(UserMedia1.UserMediaId, returnedEntity.UserMediaId, "Order does not match");
             Assert.AreEqual(UserMedia1.StorageFormat, returnedEntity.StorageFormat, "StorageFormat does not match");
             Assert.AreEqual(UserMedia1.Type, returnedEntity.Type, "Type does not match");
         }
@@ -154,7 +154,7 @@ namespace MediaRepository.Tests.Unit
 
             for (int i = 1; i <= 150; i++)
             {
-                var entity = new UserMedia(1, i)
+                var entity = new UserMedia(1)
                 {
                     StorageFormat = "Test",
                     Type = "Test"
@@ -187,7 +187,7 @@ namespace MediaRepository.Tests.Unit
 
             for (int i = 1; i <= 150; i++)
             {
-                var entity = new UserMedia(1, i)
+                var entity = new UserMedia(1)
                 {
                     StorageFormat = "Test",
                     Type = "Test"
@@ -223,7 +223,7 @@ namespace MediaRepository.Tests.Unit
 
             for (int i = 1; i <= 1050; i++)
             {
-                var entity = new UserMedia(1, i)
+                var entity = new UserMedia(1)
                 {
                     StorageFormat = "Test",
                     Type = "Test"

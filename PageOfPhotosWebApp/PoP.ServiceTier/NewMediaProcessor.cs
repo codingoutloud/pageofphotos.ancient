@@ -107,7 +107,8 @@ namespace PoP.ServiceTier
 
          // now attach it to an account
          var userMediaRepo = new UserMediaRepository(CloudStorageAccount.DevelopmentStorageAccount, "usermedia");
-         var userMedia = new UserMedia(1, new Random().Next(3, 4315))
+
+         var userMedia = new UserMedia(1) //, new Random().Next(3, 4315)
          {
             StorageFormat = origMime,
             Url = origImageUrl,
