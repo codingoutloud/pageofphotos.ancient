@@ -113,7 +113,7 @@ namespace PoP.ServiceTier
             StorageFormat = origMime,
             Url = origImageUrl,
             ThumbUrl = thumbUrl,
-            UserName = "codingoutloud" // TODO: << may not want to store this long-term since we have UserId (in SQL Azure)
+            UserName = "codingoutloud" // TODO: << may not want to store this long-term since we have UserId (in SQL Azuregi)
          };
          userMediaRepo.Insert(userMedia);
       }

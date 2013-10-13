@@ -58,6 +58,7 @@
     <Folder Include="PoP.CacheContent\" />
     <Folder Include="PoP.ServiceTierContent\" />
     <Folder Include="PoP.WebTierContent\" />
+    <Folder Include="Profiles" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="PoP.CacheContent\diagnostics.wadcfg">
@@ -69,6 +70,10 @@
     <Content Include="PoP.WebTierContent\diagnostics.wadcfg">
       <SubType>Content</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\pageofphotosProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\pageofphotosStage.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
