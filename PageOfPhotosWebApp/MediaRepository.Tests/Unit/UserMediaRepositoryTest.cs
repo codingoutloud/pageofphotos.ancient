@@ -34,7 +34,7 @@ namespace MediaRepository.Tests.Unit
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            UserMedia1 = new UserMedia(1)
+            UserMedia1 = new UserMedia("test")
             {
                 StorageFormat = "Test",
                 Type = "Test"
@@ -104,7 +104,7 @@ namespace MediaRepository.Tests.Unit
             for (int i = 1; i <= 150; i++)
             {
                 userMediaList.Add(
-                    new UserMedia(1)
+                    new UserMedia("test")
                     {
                         StorageFormat = "Test",
                         Type = "Test"
@@ -154,7 +154,7 @@ namespace MediaRepository.Tests.Unit
 
             for (int i = 1; i <= 150; i++)
             {
-                var entity = new UserMedia(1)
+                var entity = new UserMedia("test")
                 {
                     StorageFormat = "Test",
                     Type = "Test"
@@ -162,8 +162,8 @@ namespace MediaRepository.Tests.Unit
 
                 if (i > 75)
                 {
-                    entity.PartitionKey = UserMedia.FormatPartitionKey(2);
-                    entity.UserId = 2;
+                    entity.PartitionKey = UserMedia.FormatPartitionKey("two");
+                    entity.UserId = "two";
 
                 }
 
@@ -187,7 +187,7 @@ namespace MediaRepository.Tests.Unit
 
             for (int i = 1; i <= 150; i++)
             {
-                var entity = new UserMedia(1)
+                var entity = new UserMedia("one")
                 {
                     StorageFormat = "Test",
                     Type = "Test"
@@ -195,8 +195,8 @@ namespace MediaRepository.Tests.Unit
 
                 if (i > 75)
                 {
-                    entity.PartitionKey = UserMedia.FormatPartitionKey(2);
-                    entity.UserId = 2;
+                    entity.PartitionKey = UserMedia.FormatPartitionKey("two");
+                    entity.UserId = "two";
                 }
 
                 userMediaList.Add(entity);
@@ -223,7 +223,7 @@ namespace MediaRepository.Tests.Unit
 
             for (int i = 1; i <= 1050; i++)
             {
-                var entity = new UserMedia(1)
+                var entity = new UserMedia("one")
                 {
                     StorageFormat = "Test",
                     Type = "Test"

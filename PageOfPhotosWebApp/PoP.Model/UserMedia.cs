@@ -15,7 +15,7 @@ namespace PoP.Models
     /// </summary>
     public class UserMedia : TableEntity
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string UserMediaId { get; set; }
         public string Type { get; set; }
         public string StorageFormat { get; set; }
@@ -32,11 +32,14 @@ namespace PoP.Models
         // constructor overload that take elements needed to create partition and row keys.  
         // Additionally creates and sets the keys as a convience so developer does not worry
         // about setting keys in the application layer.
-        public UserMedia(int userId)
+        // TECHINCAL NOTE: The data type for userId would more likely be an integer if this was being stored
+        //                 in a relational database. However, in Table Storage, the PartitionKey property is
+        //                 always a string, making the username value a more natural fit.
+        public UserMedia(string userId)
         {
             // http://stackoverflow.com/questions/417108/why-are-there-dashes-in-a-net-guid
-            // create guid and remove dashes as they are extraneous
-            string userMediaId = Guid.NewGuid().ToString().Replace("-","");
+           // create guid string without any extraneous dashes
+            string userMediaId = Guid.NewGuid().ToString("N");
 
             UserId = userId;
             UserMediaId = userMediaId;
@@ -52,9 +55,9 @@ namespace PoP.Models
 
         // format of unique identifier for the partition within a give table, 
         // first part of an entity's primary key.  
-        public static string FormatPartitionKey(int userId)
+        public static string FormatPartitionKey(string userId)
         {
-            return userId.ToString();
+            return userId;
         }
 
         // format of unique identifier for an entity within a partition, 
