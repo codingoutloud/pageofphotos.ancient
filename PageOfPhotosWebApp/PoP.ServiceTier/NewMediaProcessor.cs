@@ -38,7 +38,7 @@ namespace PoP.ServiceTier
                var uploadedPhotoUrl = mediaUploadInfo.BlobUrl;
                var username = mediaUploadInfo.Username;
 
-               ProcessNextPhotoUpload(uploadedPhotoUrl, blobValet);
+               ProcessNextPhotoUpload(username, uploadedPhotoUrl, blobValet);
 
                queueValet.DeleteMessage(msg);
 
@@ -75,7 +75,7 @@ namespace PoP.ServiceTier
       }
 
 
-      private static void ProcessNextPhotoUpload(string origImageUrl, BlobValet blobValet)
+      private static void ProcessNextPhotoUpload(string username, string origImageUrl, BlobValet blobValet)
       {
          var httpClient = new HttpClient();
          var origStream = httpClient.GetStreamAsync(origImageUrl).Result;
@@ -108,7 +108,7 @@ namespace PoP.ServiceTier
          // now attach it to an account
          var userMediaRepo = new UserMediaRepository(CloudStorageAccount.DevelopmentStorageAccount, "usermedia");
 
-         var userMedia = new UserMedia(1) //, new Random().Next(3, 4315)
+         var userMedia = new UserMedia(username)
          {
             StorageFormat = origMime,
             Url = origImageUrl,
